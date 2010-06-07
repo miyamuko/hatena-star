@@ -1,0 +1,229 @@
+2008-07-12  MIYAMUKO Katsuyuki
+
+	* hatena-star 1.1.1 released!
+
+	* ライセンスファイルを同梱
+
+2008-03-09  MIYAMUKO Katsuyuki
+
+	* hatena-star 1.1.0 released!
+
+	* (hatena-star-stars-insert): tag と color が両方 nil なら set-text-attribute しない。
+
+	* stars => entry-or-stars
+
+	* (hatena-star-make-stars-string): inner-min を追加。
+
+	* ui 作成支援関数を追加。
+
+	* in-package :user を追加
+
+	* (starp): name が nil になることはない。
+
+	* (make-star): star list の作成をマクロ化
+	  (starp): star かどうか判定
+
+	* - RKS のチェックを追加
+	  - permalink を指定するところは entry も指定できるようにした。(get-entries 以外)
+	  - (hatena-star-delete-star): :star 引数を追加。hatena-star-entry-stars で取得した star を指定できる。
+
+	* (chomp!): 破壊的に末尾の nil を全部取り除く
+
+	* 独自の User-Agent を設定
+
+2008-03-08  MIYAMUKO Katsuyuki
+
+	* (hatena-star-user-agent): User-Agent を返す
+
+	* - 引数の順番を変更
+
+	* version.l => about.l
+
+2008-03-02  MIYAMUKO Katsuyuki
+
+	* hatena-star 1.0.3 released!
+
+	* (list-if): 引数が atom で non-nil なら list でくくる
+
+	* (hatena-star-stars-by-user): list-quote キーワード引数を追加。
+
+	* (hatena-star-stars-by-user): ユーザごとに集約する。
+
+2008-03-01  MIYAMUKO Katsuyuki
+
+	* xhr のエンコード関数を使うようにした (内部シンボル)。
+
+	* (url-encode-utf8): + が encode されていなかったので、
+	  si:www-url-encode の第 3 引数を設定。
+
+2008-02-24  MIYAMUKO Katsuyuki
+
+	* hatena-star 1.0.2 released!
+
+	* (10 ("foo")) という形式の inner count に対応
+
+	* (partition-if): predicate が t を返した要素とそれ以外に分割
+
+22008-02-23  MIYAMUKO Katsuyuki
+
+	* hatena-star 1.0.1 released!
+
+	* :nomsg オプションを追加。
+
+	* xhr-future-value の変更にいちいちあわせなくていいようにした。
+
+	* json-load => json-decode.
+
+2008-02-17  MIYAMUKO Katsuyuki
+
+	* hatena-star 1.0.0 released!
+
+	* (seal, release): nil は seal しないようにした。
+
+	* inner count は最初から数値
+
+	* json-syck を捨てた。
+
+	* get 系メソッドに since を追加
+
+2008-02-11  MIYAMUKO Katsuyuki
+
+	* hatena-star 0.1.0 released!
+
+	* hatena-star.api パッケージに移動
+
+	* hatena-star-stars-flat-p => hatena-star-stars-all-p
+
+	* - (trace-output): *Trace Output* にログを書き込むマクロ
+	  - (make-bridge): JSON リクエストが失敗したら *Trace Output* に出力して nil を返す。
+
+	* (make-bridge): filter が nil になることはない。
+
+	* hatena-star のユーザが xml-http-request を直接利用しなくても言いように
+	  wrapper を提供。
+
+	* (to-stars): type-error マクロを使う。
+
+	* (type-error): type-error を投げるマクロ。
+
+	* *hatena-star-rks* を削除。
+
+	* - hatena-star-get-entries1 をやっぱり削除。
+	    引数に文字列を指定したらエントリひとつを返し、
+	    リストを指定したら複数のエントリを返す。
+
+	* - hatena-star-get-entries1 を追加。
+	  - それ関連でリファクタリング。
+
+	* - site.l を削除、site.l のコードは entry.l に移動。
+	  - get-entries は hatena-star-entry と rks を多値で返す。
+
+	* - 300 を超えるスターの場合ユーザごとに集約される
+	  - アクセッサを定義
+
+	* コメントのアクセッサを追加。
+	  hatena-star-comment-values
+	  hatena-star-comment-name
+	  hatena-star-comment-body
+
+	* (last1): get last one item
+
+	* remove meaningless export
+
+	* - (hatena-star-entry-stars): 封印を解除
+	  - (hatena-star-entry-comments): ditto
+	  - (entry-json->lisp-value): stars, comments を封印して保存。
+
+	* (seal, release): スクラッチバッファや Trace Output に大量のデータが出るのは
+	  いやなのでクロージャで封印。
+
+	* json->struct => json->lisp-value
+
+	* use comment-json->struct.
+
+	* comments を忘れていた。
+
+2008-02-10  MIYAMUKO Katsuyuki
+
+	* new xml-http-request に対応。key のおかげでかなりシンプルになった。
+
+	* xml-http-request, json-syck を use
+
+	* - if-modified-since => since
+	  - filter => key
+
+	* hatena-star-get-blog-info => hatena-star-get-blog
+
+2008-02-03  MIYAMUKO Katsuyuki
+
+	* - xml-http-request で出力するので greeting を削除
+	  - 引数間違いを修正
+
+	* future object に対応
+
+	* eval-when で囲った。
+
+	* get 系のメソッドには If-Modified-Since をつけないようにした。
+
+	* - 引数をやっぱり全部定義。location はいらないと思う。
+	    title ははてなスターのページに表示されるっぽい。
+
+	* (hatena-star-add-comment): title がメールの subject になる
+
+	* (add-star, add-comment, delete-comment): 余計な引数を削除。title や location は不要。
+
+	* xml-http-request の新 API に対応
+
+	* bool 変換を追加
+
+2008-02-02  MIYAMUKO Katsuyuki
+
+	* - アクセッサを export
+	  - blog-info => blog
+
+	* require するファイルを正しくした
+
+	* インデント修正
+
+	* hatena-star-blog => hatena-star-blog-info
+
+	* (build-hatena-star-base-uri): remove trail slash from *hatena-star-base-uri*
+
+	* uri を各 api で作成
+
+	* (to-star): hatena-star-entry なら star に変換
+	  (hatena-star-stars-omitted-p): hatena-star-entry も受け付けるようにした。
+	  (hatena-star-stars-count): ditto.
+	  (hatena-star-stars-omit-values): 省略されていない場合は、自前で省略
+
+	* (star-json->struct): fixed typo.
+
+	* 構造体名のアクセッサと混同しやすいので API は関数名に動詞を入れることにした。
+	    - hatena-star-count => hatena-star-get-blog-info
+	    - hatena-star-entry => hatena-star-get-entry
+	    - hatena-star-entries => hatena-star-get-entries
+	  (hatena-star-get-entries): 実装。
+
+	* データ型を定義
+
+	* (hatena-star-uri-entries): 引数が atom なら list に wrap
+
+	* (hatena-star-call-handler): filter が nil なら identity を呼ぶようにした。
+	  (hatena-star-get-json-async): oledata ではなく t を返すようにした。
+
+	* てきとうに実装。
+
+	* (hatena-star-uri-blog): uri= は不要
+	  関数名、変数名を変更
+
+2008-01-20  MIYAMUKO Katsuyuki
+
+	* ひとまずコミット。
+	  endpoint 周りを実装。
+
+	* no need to ni-autoload for library!
+
+	* 新テンプレートで生成
+
+	* hatena-star 作成開始
+
