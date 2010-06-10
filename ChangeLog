@@ -1,8 +1,64 @@
+2009-05-08  MIYAMUKO Katsuyuki
+
+	* ★数字★で数字にカーソルを合わせたときに省略されたスターを取得してまとめて popup
+
+	* (hatena-star-entry-stars-by-color): 色を指定してスターを取得する
+
+2009-04-24  MIYAMUKO Katsuyuki
+
+	* mouse ポップアップをサポート。
+
+	* formatter => renderer
+
+2009-04-23  MIYAMUKO Katsuyuki
+
+	* - カラースターの API を整理
+	  - ui でもカラースターに対応
+
+2009-04-12  MIYAMUKO Katsuyuki
+
+	* (star-json->lisp-value): hatena-star-add-star が動かなくなっていたので修正。
+
+2009-04-02  MIYAMUKO Katsuyuki
+
+	* カラースターと普通のスターを分けて取得する以下の API を追加。
+	    - hatena-star-entry-normal-stars
+	    - hatena-star-entry-colored-stars
+
+2009-04-01  MIYAMUKO Katsuyuki
+
+	* colored_star に対応
+	  http://d.hatena.ne.jp/hatenadiary/20090331/1238500999
+
+	* ($fn): alist からデータを取得して指定された関数を適用して返す
+	  ($K): alist からデータを取得してキーワードで返す
+	  ($N): $fn を使うようにした
+
 2008-07-12  MIYAMUKO Katsuyuki
 
 	* hatena-star 1.1.1 released!
 
 	* ライセンスファイルを同梱
+
+2008-04-13  MIYAMUKO Katsuyuki
+
+	* (hatena-star-stars-write): stream が t なら *standard-output* に出力
+
+	* (wrap-text-attribute): body を実行してその間を set-text-attribute
+	  (hatena-star-stars-write): stream に write して stream が buffer-stream なら set-text-attribute
+	  (hatena-star-stars-insert): use wrap-text-attribute
+
+2008-03-16  MIYAMUKO Katsuyuki
+
+	* (hatena-star-count-stars-in-the-world): 関数名変更。バグ修正
+
+	* 全スター数取得 API を追加
+	  - (hatena-star-count-star-in-the-world): new function to get star in the world.
+	  - (hatena-star-get-json): hatena-star-get に分離
+	  - (hatena-star-get): xhr-get する関数
+	  - (hatena-star-base-uri): hatena star の top page の uri
+
+	* (make-json-bridge): rename from make-bridge.
 
 2008-03-09  MIYAMUKO Katsuyuki
 

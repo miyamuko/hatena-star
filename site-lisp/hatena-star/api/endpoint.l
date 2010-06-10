@@ -67,7 +67,10 @@
    (encode-params (remove-if-not #'cadr (append1 params (list "uri" uri-param t))))))
 
 (defun build-hatena-star-base-uri (method &optional (format *hatena-star-format*))
-  (format nil "~A/~A.~A" (remove-trail-slash *hatena-star-base-uri*) method format))
+  (format nil "~A~A.~A" (hatena-star-base-uri) method format))
+
+(defun hatena-star-base-uri ()
+  (format nil "~A/" (remove-trail-slash *hatena-star-base-uri*)))
 
 (defun encode-params (params)
   (xhr::url-join-params

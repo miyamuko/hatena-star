@@ -4,7 +4,7 @@
 ;;;;
 ;;;; License:
 ;;;;
-;;;;   Copyright (c) 2008 MIYAMUKO Katsuyuki.
+;;;;   Copyright (c) 2008-2009 MIYAMUKO Katsuyuki.
 ;;;;
 ;;;;   hatena-star is released under an MIT license.
 ;;;;   See hatena-star/docs/MIT-LICENSE for full license.
@@ -22,6 +22,8 @@
           hatena-star-star-quote
           hatena-star-star-count
 
+          hatena-star-stars-p
+          hatena-star-colored-stars-p
           hatena-star-stars-inner-count-p
           hatena-star-stars-by-user-p
           hatena-star-stars-all-p
@@ -35,7 +37,7 @@
   (if (numberp count)
       `(list ,name ,quote ,count)
     `(chomp! (list ,name ,quote ,count))))
-(defmacro star-name (star) `(car ,star))
+(defmacro star-name  (star) `(car ,star))
 (defmacro star-quote (star) `(cadr ,star))
 (defmacro star-count (star) `(caddr ,star))
 
@@ -69,11 +71,42 @@
 (defun star-json->lisp-value (json)
   (if (atom json) ;; inner count
       (if (numberp json) json (parse-integer json))
-    (make-star ($ json "name") ($ json "quote") ($N json "count"))))
+    (make-star ($ json "name")
+               ($ json "quote")
+               ($N json "count"))))
 
-(defun stars-json->lisp-value (json)
-  (mapcar #'star-json->lisp-value json))
+(defun stars-json->lisp-value (stars-json)
+  (mapcar #'(lambda (e)
+              (star-json->lisp-value e))
+          stars-json))
 
+(defun colored-stars-json->lisp-value (colored-stars-json)
+  (mapcar #'(lambda (e)
+              (cons ($K e "color")
+                    (stars-json->lisp-value ($ e "stars"))))
+          colored-stars-json))
+
+
+;; (("name" "quote") ("name") ...)
+;; (("name" "quote") 10 ("name"))
+(defun hatena-star-stars-p (x)
+  (and (consp x)
+       (every #'(lambda (xx)
+                  (or (numberp xx)
+                      (and (consp xx)
+                           (stringp (car xx)))))
+              (take 3 x) ; 先頭の 3 個だけチェック
+              )))
+
+;; ((:red  (("name" "quote") ("name") ...))
+;;  (:blue (("name" "quote") ("name") ...)) ... )
+(defun hatena-star-colored-stars-p (x)
+  (and (consp x)
+       (every #'(lambda (xx)
+                  (and (consp xx)
+                       (keywordp (car xx))
+                       (hatena-star-stars-p (cdr xx))))
+              x)))
 
 ;; (("name" "quote") 10 ("name2" "quote2"))
 ;; (10 ("name2" "quote2")) というのもあるみたい
@@ -155,7 +188,9 @@
 (defun to-stars (entry-or-stars)
   (cond ((hatena-star-entry-p entry-or-stars)
          (hatena-star-entry-stars entry-or-stars))
-        ((listp entry-or-stars)
+        ((hatena-star-colored-stars-p entry-or-stars)
+         (colored-stars->stars entry-or-stars))
+        ((hatena-star-stars-p entry-or-stars)
          entry-or-stars)
         (t
          (type-error entry-or-stars '(or hatena-star-entry list)))))

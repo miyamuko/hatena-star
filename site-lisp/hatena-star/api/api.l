@@ -19,7 +19,8 @@
 
 (in-package :hatena-star.api)
 
-(export '(hatena-star-get-blog
+(export '(hatena-star-count-stars-in-the-world
+          hatena-star-get-blog
           hatena-star-get-entries
           hatena-star-get-entry
           hatena-star-add-star
@@ -27,6 +28,18 @@
           hatena-star-deletable-p
           hatena-star-delete-star
           ))
+
+(defun hatena-star-count-stars-in-the-world (&key since nomsg callback future)
+  (flet ((scan-star-count (req)
+           (when (string-match "<span class=\"star_count\">\\(.*?\\)</span>"
+                               (xhr-response-text req))
+             (identity
+              (parse-integer
+               (remove #\, (match-string 1)))))))
+    (hatena-star-get (hatena-star-base-uri)
+                     :key #'scan-star-count
+                     :since since :nomsg nomsg :future future :callback callback
+                     :async (not (null callback)))))
 
 (defun hatena-star-get-blog (blog-uri &key since nomsg callback future)
   (check-type blog-uri string)

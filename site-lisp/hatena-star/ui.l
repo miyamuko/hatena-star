@@ -14,7 +14,8 @@
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (require "hatena-star/ui/config")
-  (require "hatena-star/ui/formatter")
+  (require "hatena-star/ui/renderer")
+  (require "hatena-star/ui/mouse")
   )
 
 (provide "hatena-star/ui")

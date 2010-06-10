@@ -20,20 +20,25 @@
   `(:User-Agent ,(hatena-star-user-agent)))
 
 (defun hatena-star-get-json (uri &key (filter 'identity) nomsg since callback future async)
-  (let ((key (make-bridge filter)))
-    (cond (future
-           (xhr-get-future uri :since since :key key :nomsg nomsg
-                           :headers (hatena-star-http-headers)))
-          (async
-           (xhr-get-async uri :since since :key key :nomsg nomsg :oncomplete callback
-                           :headers (hatena-star-http-headers)))
-          (t
-           (xhr-get uri :since since :key key :nomsg nomsg
-                           :headers (hatena-star-http-headers)))
-          )))
+  (hatena-star-get uri
+                   :nomsg nomsg :since since
+                   :callback callback :future future :async async
+                   :key (make-json-bridge filter)))
+
+(defun hatena-star-get (uri &key key nomsg since callback future async)
+  (cond (future
+         (xhr-get-future uri :since since :key key :nomsg nomsg
+                         :headers (hatena-star-http-headers)))
+        (async
+         (xhr-get-async uri :since since :key key :nomsg nomsg :oncomplete callback
+                        :headers (hatena-star-http-headers)))
+        (t
+         (xhr-get uri :since since :key key :nomsg nomsg
+                  :headers (hatena-star-http-headers)))
+        ))
 
 
-(defun make-bridge (filter)
+(defun make-json-bridge (filter)
   #'(lambda (res)
       (let ((status (xhr-status res))
             (body (xhr-response-text res)))

@@ -4,7 +4,7 @@
 ;;;;
 ;;;; License:
 ;;;;
-;;;;   Copyright (c) 2008 MIYAMUKO Katsuyuki.
+;;;;   Copyright (c) 2008-2009 MIYAMUKO Katsuyuki.
 ;;;;
 ;;;;   hatena-star is released under an MIT license.
 ;;;;   See hatena-star/docs/MIT-LICENSE for full license.
@@ -26,12 +26,18 @@
     (unless (equal v "")
       v)))
 
-(defun $N (alist key)
+(defun $fn (alist key fn)
   (let ((v ($ alist key)))
     (cond ((stringp v)
-           (parse-integer v))
+           (funcall fn v))
           (t
            v))))
+
+(defun $N (alist key)
+  ($fn alist key 'parse-integer))
+
+(defun $K (alist key)
+  ($fn alist key #'(lambda (v) (intern v :keyword))))
 
 (defun partition-if (predicate sequence &key start end key)
   (let ((key (or key #'identity)))
@@ -69,6 +75,11 @@
 
 (defun last1 (lst)
   (car (last lst)))
+
+(defun take (n lst)
+  (if (<= (length lst) n)
+      lst
+    (subseq lst 0 n)))
 
 (defun seal (val)
   (when val

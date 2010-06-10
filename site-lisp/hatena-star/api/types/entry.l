@@ -4,7 +4,7 @@
 ;;;;
 ;;;; License:
 ;;;;
-;;;;   Copyright (c) 2008 MIYAMUKO Katsuyuki.
+;;;;   Copyright (c) 2008-2009 MIYAMUKO Katsuyuki.
 ;;;;
 ;;;;   hatena-star is released under an MIT license.
 ;;;;   See hatena-star/docs/MIT-LICENSE for full license.
@@ -24,17 +24,60 @@
           hatena-star-entry-can-comment-p
           hatena-star-entry-uri
           hatena-star-entry-stars
+          hatena-star-entry-stars-by-color
+          hatena-star-entry-colored-stars
           hatena-star-entry-comments
           ))
+
+;;;; sample
+;;
+;; (("entries"
+;;   (("stars"
+;;     (("count" . "") ("quote" . "") ("name" . "foo1"))
+;;     (("count" . "") ("quote" . "") ("name" . "foo2"))
+;;     (("count" . "") ("quote" . "") ("name" . "foo3"))
+;;     (("count" . "") ("quote" . "") ("name" . "foo4")))
+;;    ("can_comment" . 0)
+;;    ("colored_stars"
+;;     (("stars"
+;;       (("count" . "") ("quote" . "") ("name" . "foo4")))
+;;      ("color" . "blue"))
+;;     (("stars"
+;;       (("count" . "") ("quote" . "") ("name" . "foo6"))
+;;       (("count" . "") ("quote" . "") ("name" . "foo7")))
+;;      ("color" . "red"))
+;;     (("stars"
+;;       (("count" . "") ("quote" . "") ("name" . "foo8"))
+;;       (("count" . "") ("quote" . "") ("name" . "foo9")))
+;;      ("color" . "green")))
+;;    ("uri" . "http://d.hatena.ne.jp/hatenadiary/20090331/1238500999")))
+;;  ("can_comment" . 0))
 
 (defstruct hatena-star-entry
   uri
   can-comment-p
-  sealed-stars
-  sealed-comments)
+  sealed-normal-stars
+  sealed-colored-stars
+  sealed-comments
+  )
 
 (defun hatena-star-entry-stars (x)
-  (release (hatena-star-entry-sealed-stars x)))
+  (colored-stars->stars (hatena-star-entry-colored-stars x)))
+
+(defun hatena-star-entry-stars-by-color (x color)
+  (case color
+    (:normal
+     (release (hatena-star-entry-sealed-normal-stars x)))
+    (t
+     (cdr (assoc color (release (hatena-star-entry-sealed-colored-stars x)))))
+    ))
+
+(defun hatena-star-entry-colored-stars (x)
+  (append1 (release (hatena-star-entry-sealed-colored-stars x))
+           (cons :normal (release (hatena-star-entry-sealed-normal-stars x)))))
+
+(defun colored-stars->stars (colored-stars)
+  (apply #'append (mapcar #'cdr colored-stars)))
 
 (defun hatena-star-entry-comments (x)
   (release (hatena-star-entry-sealed-comments x)))
@@ -44,7 +87,8 @@
   (make-hatena-star-entry
    :uri ($ json "uri")
    :can-comment-p (can-comment->bool json)
-   :sealed-stars (seal (stars-json->lisp-value ($ json "stars")))
+   :sealed-normal-stars (seal (stars-json->lisp-value ($ json "stars")))
+   :sealed-colored-stars (seal (colored-stars-json->lisp-value ($ json "colored_stars")))
    :sealed-comments (seal (comments-json->lisp-value ($ json "comments")))
    ))
 
