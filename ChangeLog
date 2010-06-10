@@ -1,62 +1,62 @@
 2009-05-08  MIYAMUKO Katsuyuki
 
-	* š”šš‚Å”š‚ÉƒJ[ƒ\ƒ‹‚ğ‡‚í‚¹‚½‚Æ‚«‚ÉÈ—ª‚³‚ê‚½ƒXƒ^[‚ğæ“¾‚µ‚Ä‚Ü‚Æ‚ß‚Ä popup
+	* â˜…æ•°å­—â˜…ã§æ•°å­—ã«ã‚«ãƒ¼ã‚½ãƒ«ã‚’åˆã‚ã›ãŸã¨ãã«çœç•¥ã•ã‚ŒãŸã‚¹ã‚¿ãƒ¼ã‚’å–å¾—ã—ã¦ã¾ã¨ã‚ã¦ popup
 
-	* (hatena-star-entry-stars-by-color): F‚ğw’è‚µ‚ÄƒXƒ^[‚ğæ“¾‚·‚é
+	* (hatena-star-entry-stars-by-color): è‰²ã‚’æŒ‡å®šã—ã¦ã‚¹ã‚¿ãƒ¼ã‚’å–å¾—ã™ã‚‹
 
 2009-04-24  MIYAMUKO Katsuyuki
 
-	* mouse ƒ|ƒbƒvƒAƒbƒv‚ğƒTƒ|[ƒgB
+	* mouse ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ã‚’ã‚µãƒãƒ¼ãƒˆã€‚
 
 	* formatter => renderer
 
 2009-04-23  MIYAMUKO Katsuyuki
 
-	* - ƒJƒ‰[ƒXƒ^[‚Ì API ‚ğ®—
-	  - ui ‚Å‚àƒJƒ‰[ƒXƒ^[‚É‘Î‰
+	* - ã‚«ãƒ©ãƒ¼ã‚¹ã‚¿ãƒ¼ã® API ã‚’æ•´ç†
+	  - ui ã§ã‚‚ã‚«ãƒ©ãƒ¼ã‚¹ã‚¿ãƒ¼ã«å¯¾å¿œ
 
 2009-04-12  MIYAMUKO Katsuyuki
 
-	* (star-json->lisp-value): hatena-star-add-star ‚ª“®‚©‚È‚­‚È‚Á‚Ä‚¢‚½‚Ì‚ÅC³B
+	* (star-json->lisp-value): hatena-star-add-star ãŒå‹•ã‹ãªããªã£ã¦ã„ãŸã®ã§ä¿®æ­£ã€‚
 
 2009-04-02  MIYAMUKO Katsuyuki
 
-	* ƒJƒ‰[ƒXƒ^[‚Æ•’Ê‚ÌƒXƒ^[‚ğ•ª‚¯‚Äæ“¾‚·‚éˆÈ‰º‚Ì API ‚ğ’Ç‰ÁB
+	* ã‚«ãƒ©ãƒ¼ã‚¹ã‚¿ãƒ¼ã¨æ™®é€šã®ã‚¹ã‚¿ãƒ¼ã‚’åˆ†ã‘ã¦å–å¾—ã™ã‚‹ä»¥ä¸‹ã® API ã‚’è¿½åŠ ã€‚
 	    - hatena-star-entry-normal-stars
 	    - hatena-star-entry-colored-stars
 
 2009-04-01  MIYAMUKO Katsuyuki
 
-	* colored_star ‚É‘Î‰
+	* colored_star ã«å¯¾å¿œ
 	  http://d.hatena.ne.jp/hatenadiary/20090331/1238500999
 
-	* ($fn): alist ‚©‚çƒf[ƒ^‚ğæ“¾‚µ‚Äw’è‚³‚ê‚½ŠÖ”‚ğ“K—p‚µ‚Ä•Ô‚·
-	  ($K): alist ‚©‚çƒf[ƒ^‚ğæ“¾‚µ‚ÄƒL[ƒ[ƒh‚Å•Ô‚·
-	  ($N): $fn ‚ğg‚¤‚æ‚¤‚É‚µ‚½
+	* ($fn): alist ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã¦æŒ‡å®šã•ã‚ŒãŸé–¢æ•°ã‚’é©ç”¨ã—ã¦è¿”ã™
+	  ($K): alist ã‹ã‚‰ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—ã—ã¦ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã§è¿”ã™
+	  ($N): $fn ã‚’ä½¿ã†ã‚ˆã†ã«ã—ãŸ
 
 2008-07-12  MIYAMUKO Katsuyuki
 
 	* hatena-star 1.1.1 released!
 
-	* ƒ‰ƒCƒZƒ“ƒXƒtƒ@ƒCƒ‹‚ğ“¯«
+	* ãƒ©ã‚¤ã‚»ãƒ³ã‚¹ãƒ•ã‚¡ã‚¤ãƒ«ã‚’åŒæ¢±
 
 2008-04-13  MIYAMUKO Katsuyuki
 
-	* (hatena-star-stars-write): stream ‚ª t ‚È‚ç *standard-output* ‚Éo—Í
+	* (hatena-star-stars-write): stream ãŒ t ãªã‚‰ *standard-output* ã«å‡ºåŠ›
 
-	* (wrap-text-attribute): body ‚ğÀs‚µ‚Ä‚»‚ÌŠÔ‚ğ set-text-attribute
-	  (hatena-star-stars-write): stream ‚É write ‚µ‚Ä stream ‚ª buffer-stream ‚È‚ç set-text-attribute
+	* (wrap-text-attribute): body ã‚’å®Ÿè¡Œã—ã¦ãã®é–“ã‚’ set-text-attribute
+	  (hatena-star-stars-write): stream ã« write ã—ã¦ stream ãŒ buffer-stream ãªã‚‰ set-text-attribute
 	  (hatena-star-stars-insert): use wrap-text-attribute
 
 2008-03-16  MIYAMUKO Katsuyuki
 
-	* (hatena-star-count-stars-in-the-world): ŠÖ”–¼•ÏXBƒoƒOC³
+	* (hatena-star-count-stars-in-the-world): é–¢æ•°åå¤‰æ›´ã€‚ãƒã‚°ä¿®æ­£
 
-	* ‘SƒXƒ^[”æ“¾ API ‚ğ’Ç‰Á
+	* å…¨ã‚¹ã‚¿ãƒ¼æ•°å–å¾— API ã‚’è¿½åŠ 
 	  - (hatena-star-count-star-in-the-world): new function to get star in the world.
-	  - (hatena-star-get-json): hatena-star-get ‚É•ª—£
-	  - (hatena-star-get): xhr-get ‚·‚éŠÖ”
-	  - (hatena-star-base-uri): hatena star ‚Ì top page ‚Ì uri
+	  - (hatena-star-get-json): hatena-star-get ã«åˆ†é›¢
+	  - (hatena-star-get): xhr-get ã™ã‚‹é–¢æ•°
+	  - (hatena-star-base-uri): hatena star ã® top page ã® uri
 
 	* (make-json-bridge): rename from make-bridge.
 
@@ -64,34 +64,34 @@
 
 	* hatena-star 1.1.0 released!
 
-	* (hatena-star-stars-insert): tag ‚Æ color ‚ª—¼•û nil ‚È‚ç set-text-attribute ‚µ‚È‚¢B
+	* (hatena-star-stars-insert): tag ã¨ color ãŒä¸¡æ–¹ nil ãªã‚‰ set-text-attribute ã—ãªã„ã€‚
 
 	* stars => entry-or-stars
 
-	* (hatena-star-make-stars-string): inner-min ‚ğ’Ç‰ÁB
+	* (hatena-star-make-stars-string): inner-min ã‚’è¿½åŠ ã€‚
 
-	* ui ì¬x‰‡ŠÖ”‚ğ’Ç‰ÁB
+	* ui ä½œæˆæ”¯æ´é–¢æ•°ã‚’è¿½åŠ ã€‚
 
-	* in-package :user ‚ğ’Ç‰Á
+	* in-package :user ã‚’è¿½åŠ 
 
-	* (starp): name ‚ª nil ‚É‚È‚é‚±‚Æ‚Í‚È‚¢B
+	* (starp): name ãŒ nil ã«ãªã‚‹ã“ã¨ã¯ãªã„ã€‚
 
-	* (make-star): star list ‚Ìì¬‚ğƒ}ƒNƒ‰»
-	  (starp): star ‚©‚Ç‚¤‚©”»’è
+	* (make-star): star list ã®ä½œæˆã‚’ãƒã‚¯ãƒ­åŒ–
+	  (starp): star ã‹ã©ã†ã‹åˆ¤å®š
 
-	* - RKS ‚Ìƒ`ƒFƒbƒN‚ğ’Ç‰Á
-	  - permalink ‚ğw’è‚·‚é‚Æ‚±‚ë‚Í entry ‚àw’è‚Å‚«‚é‚æ‚¤‚É‚µ‚½B(get-entries ˆÈŠO)
-	  - (hatena-star-delete-star): :star ˆø”‚ğ’Ç‰ÁBhatena-star-entry-stars ‚Åæ“¾‚µ‚½ star ‚ğw’è‚Å‚«‚éB
+	* - RKS ã®ãƒã‚§ãƒƒã‚¯ã‚’è¿½åŠ 
+	  - permalink ã‚’æŒ‡å®šã™ã‚‹ã¨ã“ã‚ã¯ entry ã‚‚æŒ‡å®šã§ãã‚‹ã‚ˆã†ã«ã—ãŸã€‚(get-entries ä»¥å¤–)
+	  - (hatena-star-delete-star): :star å¼•æ•°ã‚’è¿½åŠ ã€‚hatena-star-entry-stars ã§å–å¾—ã—ãŸ star ã‚’æŒ‡å®šã§ãã‚‹ã€‚
 
-	* (chomp!): ”j‰ó“I‚É––”ö‚Ì nil ‚ğ‘S•”æ‚èœ‚­
+	* (chomp!): ç ´å£Šçš„ã«æœ«å°¾ã® nil ã‚’å…¨éƒ¨å–ã‚Šé™¤ã
 
-	* “Æ©‚Ì User-Agent ‚ğİ’è
+	* ç‹¬è‡ªã® User-Agent ã‚’è¨­å®š
 
 2008-03-08  MIYAMUKO Katsuyuki
 
-	* (hatena-star-user-agent): User-Agent ‚ğ•Ô‚·
+	* (hatena-star-user-agent): User-Agent ã‚’è¿”ã™
 
-	* - ˆø”‚Ì‡”Ô‚ğ•ÏX
+	* - å¼•æ•°ã®é †ç•ªã‚’å¤‰æ›´
 
 	* version.l => about.l
 
@@ -99,34 +99,34 @@
 
 	* hatena-star 1.0.3 released!
 
-	* (list-if): ˆø”‚ª atom ‚Å non-nil ‚È‚ç list ‚Å‚­‚­‚é
+	* (list-if): å¼•æ•°ãŒ atom ã§ non-nil ãªã‚‰ list ã§ããã‚‹
 
-	* (hatena-star-stars-by-user): list-quote ƒL[ƒ[ƒhˆø”‚ğ’Ç‰ÁB
+	* (hatena-star-stars-by-user): list-quote ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰å¼•æ•°ã‚’è¿½åŠ ã€‚
 
-	* (hatena-star-stars-by-user): ƒ†[ƒU‚²‚Æ‚ÉW–ñ‚·‚éB
+	* (hatena-star-stars-by-user): ãƒ¦ãƒ¼ã‚¶ã”ã¨ã«é›†ç´„ã™ã‚‹ã€‚
 
 2008-03-01  MIYAMUKO Katsuyuki
 
-	* xhr ‚ÌƒGƒ“ƒR[ƒhŠÖ”‚ğg‚¤‚æ‚¤‚É‚µ‚½ (“à•”ƒVƒ“ƒ{ƒ‹)B
+	* xhr ã®ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰é–¢æ•°ã‚’ä½¿ã†ã‚ˆã†ã«ã—ãŸ (å†…éƒ¨ã‚·ãƒ³ãƒœãƒ«)ã€‚
 
-	* (url-encode-utf8): + ‚ª encode ‚³‚ê‚Ä‚¢‚È‚©‚Á‚½‚Ì‚ÅA
-	  si:www-url-encode ‚Ì‘æ 3 ˆø”‚ğİ’èB
+	* (url-encode-utf8): + ãŒ encode ã•ã‚Œã¦ã„ãªã‹ã£ãŸã®ã§ã€
+	  si:www-url-encode ã®ç¬¬ 3 å¼•æ•°ã‚’è¨­å®šã€‚
 
 2008-02-24  MIYAMUKO Katsuyuki
 
 	* hatena-star 1.0.2 released!
 
-	* (10 ("foo")) ‚Æ‚¢‚¤Œ`®‚Ì inner count ‚É‘Î‰
+	* (10 ("foo")) ã¨ã„ã†å½¢å¼ã® inner count ã«å¯¾å¿œ
 
-	* (partition-if): predicate ‚ª t ‚ğ•Ô‚µ‚½—v‘f‚Æ‚»‚êˆÈŠO‚É•ªŠ„
+	* (partition-if): predicate ãŒ t ã‚’è¿”ã—ãŸè¦ç´ ã¨ãã‚Œä»¥å¤–ã«åˆ†å‰²
 
 22008-02-23  MIYAMUKO Katsuyuki
 
 	* hatena-star 1.0.1 released!
 
-	* :nomsg ƒIƒvƒVƒ‡ƒ“‚ğ’Ç‰ÁB
+	* :nomsg ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’è¿½åŠ ã€‚
 
-	* xhr-future-value ‚Ì•ÏX‚É‚¢‚¿‚¢‚¿‚ ‚í‚¹‚È‚­‚Ä‚¢‚¢‚æ‚¤‚É‚µ‚½B
+	* xhr-future-value ã®å¤‰æ›´ã«ã„ã¡ã„ã¡ã‚ã‚ã›ãªãã¦ã„ã„ã‚ˆã†ã«ã—ãŸã€‚
 
 	* json-load => json-decode.
 
@@ -134,50 +134,50 @@
 
 	* hatena-star 1.0.0 released!
 
-	* (seal, release): nil ‚Í seal ‚µ‚È‚¢‚æ‚¤‚É‚µ‚½B
+	* (seal, release): nil ã¯ seal ã—ãªã„ã‚ˆã†ã«ã—ãŸã€‚
 
-	* inner count ‚ÍÅ‰‚©‚ç”’l
+	* inner count ã¯æœ€åˆã‹ã‚‰æ•°å€¤
 
-	* json-syck ‚ğÌ‚Ä‚½B
+	* json-syck ã‚’æ¨ã¦ãŸã€‚
 
-	* get Œnƒƒ\ƒbƒh‚É since ‚ğ’Ç‰Á
+	* get ç³»ãƒ¡ã‚½ãƒƒãƒ‰ã« since ã‚’è¿½åŠ 
 
 2008-02-11  MIYAMUKO Katsuyuki
 
 	* hatena-star 0.1.0 released!
 
-	* hatena-star.api ƒpƒbƒP[ƒW‚ÉˆÚ“®
+	* hatena-star.api ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ã«ç§»å‹•
 
 	* hatena-star-stars-flat-p => hatena-star-stars-all-p
 
-	* - (trace-output): *Trace Output* ‚ÉƒƒO‚ğ‘‚«‚Şƒ}ƒNƒ
-	  - (make-bridge): JSON ƒŠƒNƒGƒXƒg‚ª¸”s‚µ‚½‚ç *Trace Output* ‚Éo—Í‚µ‚Ä nil ‚ğ•Ô‚·B
+	* - (trace-output): *Trace Output* ã«ãƒ­ã‚°ã‚’æ›¸ãè¾¼ã‚€ãƒã‚¯ãƒ­
+	  - (make-bridge): JSON ãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒå¤±æ•—ã—ãŸã‚‰ *Trace Output* ã«å‡ºåŠ›ã—ã¦ nil ã‚’è¿”ã™ã€‚
 
-	* (make-bridge): filter ‚ª nil ‚É‚È‚é‚±‚Æ‚Í‚È‚¢B
+	* (make-bridge): filter ãŒ nil ã«ãªã‚‹ã“ã¨ã¯ãªã„ã€‚
 
-	* hatena-star ‚Ìƒ†[ƒU‚ª xml-http-request ‚ğ’¼Ú—˜—p‚µ‚È‚­‚Ä‚àŒ¾‚¢‚æ‚¤‚É
-	  wrapper ‚ğ’ñ‹ŸB
+	* hatena-star ã®ãƒ¦ãƒ¼ã‚¶ãŒ xml-http-request ã‚’ç›´æ¥åˆ©ç”¨ã—ãªãã¦ã‚‚è¨€ã„ã‚ˆã†ã«
+	  wrapper ã‚’æä¾›ã€‚
 
-	* (to-stars): type-error ƒ}ƒNƒ‚ğg‚¤B
+	* (to-stars): type-error ãƒã‚¯ãƒ­ã‚’ä½¿ã†ã€‚
 
-	* (type-error): type-error ‚ğ“Š‚°‚éƒ}ƒNƒB
+	* (type-error): type-error ã‚’æŠ•ã’ã‚‹ãƒã‚¯ãƒ­ã€‚
 
-	* *hatena-star-rks* ‚ğíœB
+	* *hatena-star-rks* ã‚’å‰Šé™¤ã€‚
 
-	* - hatena-star-get-entries1 ‚ğ‚â‚Á‚Ï‚èíœB
-	    ˆø”‚É•¶š—ñ‚ğw’è‚µ‚½‚çƒGƒ“ƒgƒŠ‚Ğ‚Æ‚Â‚ğ•Ô‚µA
-	    ƒŠƒXƒg‚ğw’è‚µ‚½‚ç•¡”‚ÌƒGƒ“ƒgƒŠ‚ğ•Ô‚·B
+	* - hatena-star-get-entries1 ã‚’ã‚„ã£ã±ã‚Šå‰Šé™¤ã€‚
+	    å¼•æ•°ã«æ–‡å­—åˆ—ã‚’æŒ‡å®šã—ãŸã‚‰ã‚¨ãƒ³ãƒˆãƒªã²ã¨ã¤ã‚’è¿”ã—ã€
+	    ãƒªã‚¹ãƒˆã‚’æŒ‡å®šã—ãŸã‚‰è¤‡æ•°ã®ã‚¨ãƒ³ãƒˆãƒªã‚’è¿”ã™ã€‚
 
-	* - hatena-star-get-entries1 ‚ğ’Ç‰ÁB
-	  - ‚»‚êŠÖ˜A‚ÅƒŠƒtƒ@ƒNƒ^ƒŠƒ“ƒOB
+	* - hatena-star-get-entries1 ã‚’è¿½åŠ ã€‚
+	  - ãã‚Œé–¢é€£ã§ãƒªãƒ•ã‚¡ã‚¯ã‚¿ãƒªãƒ³ã‚°ã€‚
 
-	* - site.l ‚ğíœAsite.l ‚ÌƒR[ƒh‚Í entry.l ‚ÉˆÚ“®B
-	  - get-entries ‚Í hatena-star-entry ‚Æ rks ‚ğ‘½’l‚Å•Ô‚·B
+	* - site.l ã‚’å‰Šé™¤ã€site.l ã®ã‚³ãƒ¼ãƒ‰ã¯ entry.l ã«ç§»å‹•ã€‚
+	  - get-entries ã¯ hatena-star-entry ã¨ rks ã‚’å¤šå€¤ã§è¿”ã™ã€‚
 
-	* - 300 ‚ğ’´‚¦‚éƒXƒ^[‚Ìê‡ƒ†[ƒU‚²‚Æ‚ÉW–ñ‚³‚ê‚é
-	  - ƒAƒNƒZƒbƒT‚ğ’è‹`
+	* - 300 ã‚’è¶…ãˆã‚‹ã‚¹ã‚¿ãƒ¼ã®å ´åˆãƒ¦ãƒ¼ã‚¶ã”ã¨ã«é›†ç´„ã•ã‚Œã‚‹
+	  - ã‚¢ã‚¯ã‚»ãƒƒã‚µã‚’å®šç¾©
 
-	* ƒRƒƒ“ƒg‚ÌƒAƒNƒZƒbƒT‚ğ’Ç‰ÁB
+	* ã‚³ãƒ¡ãƒ³ãƒˆã®ã‚¢ã‚¯ã‚»ãƒƒã‚µã‚’è¿½åŠ ã€‚
 	  hatena-star-comment-values
 	  hatena-star-comment-name
 	  hatena-star-comment-body
@@ -186,24 +186,24 @@
 
 	* remove meaningless export
 
-	* - (hatena-star-entry-stars): ••ˆó‚ğ‰ğœ
+	* - (hatena-star-entry-stars): å°å°ã‚’è§£é™¤
 	  - (hatena-star-entry-comments): ditto
-	  - (entry-json->lisp-value): stars, comments ‚ğ••ˆó‚µ‚Ä•Û‘¶B
+	  - (entry-json->lisp-value): stars, comments ã‚’å°å°ã—ã¦ä¿å­˜ã€‚
 
-	* (seal, release): ƒXƒNƒ‰ƒbƒ`ƒoƒbƒtƒ@‚â Trace Output ‚É‘å—Ê‚Ìƒf[ƒ^‚ªo‚é‚Ì‚Í
-	  ‚¢‚â‚È‚Ì‚ÅƒNƒ[ƒWƒƒ‚Å••ˆóB
+	* (seal, release): ã‚¹ã‚¯ãƒ©ãƒƒãƒãƒãƒƒãƒ•ã‚¡ã‚„ Trace Output ã«å¤§é‡ã®ãƒ‡ãƒ¼ã‚¿ãŒå‡ºã‚‹ã®ã¯
+	  ã„ã‚„ãªã®ã§ã‚¯ãƒ­ãƒ¼ã‚¸ãƒ£ã§å°å°ã€‚
 
 	* json->struct => json->lisp-value
 
 	* use comment-json->struct.
 
-	* comments ‚ğ–Y‚ê‚Ä‚¢‚½B
+	* comments ã‚’å¿˜ã‚Œã¦ã„ãŸã€‚
 
 2008-02-10  MIYAMUKO Katsuyuki
 
-	* new xml-http-request ‚É‘Î‰Bkey ‚Ì‚¨‚©‚°‚Å‚©‚È‚èƒVƒ“ƒvƒ‹‚É‚È‚Á‚½B
+	* new xml-http-request ã«å¯¾å¿œã€‚key ã®ãŠã‹ã’ã§ã‹ãªã‚Šã‚·ãƒ³ãƒ—ãƒ«ã«ãªã£ãŸã€‚
 
-	* xml-http-request, json-syck ‚ğ use
+	* xml-http-request, json-syck ã‚’ use
 
 	* - if-modified-since => since
 	  - filter => key
@@ -212,74 +212,74 @@
 
 2008-02-03  MIYAMUKO Katsuyuki
 
-	* - xml-http-request ‚Åo—Í‚·‚é‚Ì‚Å greeting ‚ğíœ
-	  - ˆø”ŠÔˆá‚¢‚ğC³
+	* - xml-http-request ã§å‡ºåŠ›ã™ã‚‹ã®ã§ greeting ã‚’å‰Šé™¤
+	  - å¼•æ•°é–“é•ã„ã‚’ä¿®æ­£
 
-	* future object ‚É‘Î‰
+	* future object ã«å¯¾å¿œ
 
-	* eval-when ‚ÅˆÍ‚Á‚½B
+	* eval-when ã§å›²ã£ãŸã€‚
 
-	* get Œn‚Ìƒƒ\ƒbƒh‚É‚Í If-Modified-Since ‚ğ‚Â‚¯‚È‚¢‚æ‚¤‚É‚µ‚½B
+	* get ç³»ã®ãƒ¡ã‚½ãƒƒãƒ‰ã«ã¯ If-Modified-Since ã‚’ã¤ã‘ãªã„ã‚ˆã†ã«ã—ãŸã€‚
 
-	* - ˆø”‚ğ‚â‚Á‚Ï‚è‘S•”’è‹`Blocation ‚Í‚¢‚ç‚È‚¢‚Æv‚¤B
-	    title ‚Í‚Í‚Ä‚ÈƒXƒ^[‚Ìƒy[ƒW‚É•\¦‚³‚ê‚é‚Á‚Û‚¢B
+	* - å¼•æ•°ã‚’ã‚„ã£ã±ã‚Šå…¨éƒ¨å®šç¾©ã€‚location ã¯ã„ã‚‰ãªã„ã¨æ€ã†ã€‚
+	    title ã¯ã¯ã¦ãªã‚¹ã‚¿ãƒ¼ã®ãƒšãƒ¼ã‚¸ã«è¡¨ç¤ºã•ã‚Œã‚‹ã£ã½ã„ã€‚
 
-	* (hatena-star-add-comment): title ‚ªƒ[ƒ‹‚Ì subject ‚É‚È‚é
+	* (hatena-star-add-comment): title ãŒãƒ¡ãƒ¼ãƒ«ã® subject ã«ãªã‚‹
 
-	* (add-star, add-comment, delete-comment): —]Œv‚Èˆø”‚ğíœBtitle ‚â location ‚Í•s—vB
+	* (add-star, add-comment, delete-comment): ä½™è¨ˆãªå¼•æ•°ã‚’å‰Šé™¤ã€‚title ã‚„ location ã¯ä¸è¦ã€‚
 
-	* xml-http-request ‚ÌV API ‚É‘Î‰
+	* xml-http-request ã®æ–° API ã«å¯¾å¿œ
 
-	* bool •ÏŠ·‚ğ’Ç‰Á
+	* bool å¤‰æ›ã‚’è¿½åŠ 
 
 2008-02-02  MIYAMUKO Katsuyuki
 
-	* - ƒAƒNƒZƒbƒT‚ğ export
+	* - ã‚¢ã‚¯ã‚»ãƒƒã‚µã‚’ export
 	  - blog-info => blog
 
-	* require ‚·‚éƒtƒ@ƒCƒ‹‚ğ³‚µ‚­‚µ‚½
+	* require ã™ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã‚’æ­£ã—ãã—ãŸ
 
-	* ƒCƒ“ƒfƒ“ƒgC³
+	* ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆä¿®æ­£
 
 	* hatena-star-blog => hatena-star-blog-info
 
 	* (build-hatena-star-base-uri): remove trail slash from *hatena-star-base-uri*
 
-	* uri ‚ğŠe api ‚Åì¬
+	* uri ã‚’å„ api ã§ä½œæˆ
 
-	* (to-star): hatena-star-entry ‚È‚ç star ‚É•ÏŠ·
-	  (hatena-star-stars-omitted-p): hatena-star-entry ‚àó‚¯•t‚¯‚é‚æ‚¤‚É‚µ‚½B
+	* (to-star): hatena-star-entry ãªã‚‰ star ã«å¤‰æ›
+	  (hatena-star-stars-omitted-p): hatena-star-entry ã‚‚å—ã‘ä»˜ã‘ã‚‹ã‚ˆã†ã«ã—ãŸã€‚
 	  (hatena-star-stars-count): ditto.
-	  (hatena-star-stars-omit-values): È—ª‚³‚ê‚Ä‚¢‚È‚¢ê‡‚ÍA©‘O‚ÅÈ—ª
+	  (hatena-star-stars-omit-values): çœç•¥ã•ã‚Œã¦ã„ãªã„å ´åˆã¯ã€è‡ªå‰ã§çœç•¥
 
 	* (star-json->struct): fixed typo.
 
-	* \‘¢‘Ì–¼‚ÌƒAƒNƒZƒbƒT‚Æ¬“¯‚µ‚â‚·‚¢‚Ì‚Å API ‚ÍŠÖ”–¼‚É“®Œ‚ğ“ü‚ê‚é‚±‚Æ‚É‚µ‚½B
+	* æ§‹é€ ä½“åã®ã‚¢ã‚¯ã‚»ãƒƒã‚µã¨æ··åŒã—ã‚„ã™ã„ã®ã§ API ã¯é–¢æ•°åã«å‹•è©ã‚’å…¥ã‚Œã‚‹ã“ã¨ã«ã—ãŸã€‚
 	    - hatena-star-count => hatena-star-get-blog-info
 	    - hatena-star-entry => hatena-star-get-entry
 	    - hatena-star-entries => hatena-star-get-entries
-	  (hatena-star-get-entries): À‘•B
+	  (hatena-star-get-entries): å®Ÿè£…ã€‚
 
-	* ƒf[ƒ^Œ^‚ğ’è‹`
+	* ãƒ‡ãƒ¼ã‚¿å‹ã‚’å®šç¾©
 
-	* (hatena-star-uri-entries): ˆø”‚ª atom ‚È‚ç list ‚É wrap
+	* (hatena-star-uri-entries): å¼•æ•°ãŒ atom ãªã‚‰ list ã« wrap
 
-	* (hatena-star-call-handler): filter ‚ª nil ‚È‚ç identity ‚ğŒÄ‚Ô‚æ‚¤‚É‚µ‚½B
-	  (hatena-star-get-json-async): oledata ‚Å‚Í‚È‚­ t ‚ğ•Ô‚·‚æ‚¤‚É‚µ‚½B
+	* (hatena-star-call-handler): filter ãŒ nil ãªã‚‰ identity ã‚’å‘¼ã¶ã‚ˆã†ã«ã—ãŸã€‚
+	  (hatena-star-get-json-async): oledata ã§ã¯ãªã t ã‚’è¿”ã™ã‚ˆã†ã«ã—ãŸã€‚
 
-	* ‚Ä‚«‚Æ‚¤‚ÉÀ‘•B
+	* ã¦ãã¨ã†ã«å®Ÿè£…ã€‚
 
-	* (hatena-star-uri-blog): uri= ‚Í•s—v
-	  ŠÖ”–¼A•Ï”–¼‚ğ•ÏX
+	* (hatena-star-uri-blog): uri= ã¯ä¸è¦
+	  é–¢æ•°åã€å¤‰æ•°åã‚’å¤‰æ›´
 
 2008-01-20  MIYAMUKO Katsuyuki
 
-	* ‚Ğ‚Æ‚Ü‚¸ƒRƒ~ƒbƒgB
-	  endpoint ü‚è‚ğÀ‘•B
+	* ã²ã¨ã¾ãšã‚³ãƒŸãƒƒãƒˆã€‚
+	  endpoint å‘¨ã‚Šã‚’å®Ÿè£…ã€‚
 
 	* no need to ni-autoload for library!
 
-	* Vƒeƒ“ƒvƒŒ[ƒg‚Å¶¬
+	* æ–°ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆã§ç”Ÿæˆ
 
-	* hatena-star ì¬ŠJn
+	* hatena-star ä½œæˆé–‹å§‹
 

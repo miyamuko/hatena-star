@@ -1,6 +1,6 @@
-= hatena-star - �͂ĂȃX�^�[ API
+= hatena-star - はてなスター API
 
-  * Author: �݂�ނ� ���䂫 ((<URL:mailto:miyamuko@gmail.com>))
+  * Author: みやむこ かつゆき ((<URL:mailto:miyamuko@gmail.com>))
   * Home URL: ((<URL:http://miyamuko.s56.xrea.com/xyzzy/hatena-star/intro.htm>))
   * Version: 1.1.1
 
@@ -12,14 +12,14 @@
   (require "hatena-star/api")
   (use-package :hatena-star.api)
 
-  ;; RKS (���O�C���Z�b�V�������ƂɌŗL�� ID, add/delete �ŕK�v)
+  ;; RKS (ログインセッションごとに固有の ID, add/delete で必要)
   (defvar *rks* nil)
 
-  ;; �͂ĂȃX�^�[�J�E���g API
+  ;; はてなスターカウント API
   (let ((blog (hatena-star-get-blog "http://d.hatena.ne.jp/hatenastar/")))
     ...)
 
-  ;; �G���g���� RKS �̎擾
+  ;; エントリと RKS の取得
   (multiple-value-bind (entries rks)
       (hatena-star-get-entries '("http://d.hatena.ne.jp/hatenastar/20071129/1196290565"
                                  "http://d.hatena.ne.jp/hatenastar/20071124/1195896789"
@@ -27,32 +27,32 @@
     (setf *rks* rks)
     (your-cool-show-hatena-star-entry
      (mapcar #'(lambda (entry)
-                 ;; ���������ďȗ�����Ă�����Ď擾
+                 ;; ☆が多くて省略されていたら再取得
                  (if (hatena-star-stars-all-p entry)
                      entry
                    (hatena-star-get-entry (hatena-star-entry-uri entry))))
              entries)))
 
-  ;; �R�����g�̒ǉ�
+  ;; コメントの追加
   (when (hatena-star-entry-can-comment-p entry)
     (hatena-star-add-comment (hatena-star-entry-uri entry)
                              *rks*
                              :title title
-                             :body (read-string "�R�����g: ")))
+                             :body (read-string "コメント: ")))
 
-  ;; �I�𕶎�������p���ā��̒ǉ�
-  (let ((title "�ق��ق�")
+  ;; 選択文字列を引用して☆の追加
+  (let ((title "ほげほげ")
         (quote (selection-start-end (s e) (buffer-substring s e))))
     (let ((r (hatena-star-add-star (hatena-star-entry-uri entry)
                                    *rks* :title title :quote quote)))
       (cond ((null r)
-             (values nil nil))  ; ���ǉ����s
+             (values nil nil))  ; ☆追加失敗
             ((string= quote (hatena-star-star-quote r))
-             (values t t))      ; ���ǉ� + ���p����
+             (values t t))      ; ☆追加 + 引用成功
             (t
-             (values t nil))))) ; ���ǉ����� + ���p���s
+             (values t nil))))) ; ☆追加成功 + 引用失敗
 
-  ;; ���̍폜 (�w�肳�ꂽ entry �� star ���폜)
+  ;; ☆の削除 (指定された entry の star を削除)
   (when (hatena-star-deletable-p (hatena-star-star-name star))
     (hatena-star-delete-star (hatena-star-entry-uri entry)
                              *rks*
@@ -62,106 +62,106 @@
 
 == DESCRIPTION
 
-hatena-star �� ((<"�͂ĂȃX�^�["|URL:http://s.hatena.ne.jp/>)) API ��
-xyzzy ������s���邽�߂̃��C�u�����ł��B
+hatena-star は ((<"はてなスター"|URL:http://s.hatena.ne.jp/>)) API を
+xyzzy から実行するためのライブラリです。
 
-�ȉ��̂��Ƃ��ł��܂��B
+以下のことができます。
 
-  * �X�^�[�̎擾
-  * �X�^�[�̒ǉ��E�폜
-  * �R�����g�̒ǉ�
-  * �͂ĂȃX�^�[�J�E���g
+  * スターの取得
+  * スターの追加・削除
+  * コメントの追加
+  * はてなスターカウント
 
-xml-http-request ���g���Ă���̂Ŕ񓯊��ɂ͂ĂȃX�^�[ API �����s�ł��܂��B
+xml-http-request を使っているので非同期にはてなスター API を実行できます。
 
 
 == INSTALL
 
-=== NetInstaller �ŃC���X�g�[��
+=== NetInstaller でインストール
 
 (1) ((<NetInstaller|URL:http://www7a.biglobe.ne.jp/~hat/xyzzy/ni.html>))
-    �� hatena-star ���C���X�g�[�����܂��B
+    で hatena-star をインストールします。
 
-=== NetInstaller ���g�킸�ɃC���X�g�[��
+=== NetInstaller を使わずにインストール
 
-(1) �A�[�J�C�u���_�E�����[�h���܂��B
+(1) アーカイブをダウンロードします。
 
     ((<URL:http://miyamuko.s56.xrea.com/xyzzy/archives/hatena-star.zip>))
 
-(2) �A�[�J�C�u��W�J���āA$XYZZY/site-lisp �z���Ƀt�@�C�����R�s�[���܂��B
+(2) アーカイブを展開して、$XYZZY/site-lisp 配下にファイルをコピーします。
 
 
 == MODULE
 
 === DEPENDS
 
-hatena-star �͈ȉ��̃��W���[���Ɉˑ����Ă��܂��B�ʓr�C���X�g�[�����Ă��������B
+hatena-star は以下のモジュールに依存しています。別途インストールしてください。
 
   * ((<"xml-http-request"|URL:http://miyamuko.s56.xrea.com/xyzzy/xml-http-request/intro.htm>))
-    1.1.1 �ȏ�
+    1.1.1 以上
   * ((<"json"|URL:http://miyamuko.s56.xrea.com/xyzzy/json/intro.htm>))
-    0.1.1 �ȏ�
+    0.1.1 以上
 
 
 === PACKAGE
 
-hatena-star �͈ȉ��̃p�b�P�[�W�𗘗p���Ă��܂��B
+hatena-star は以下のパッケージを利用しています。
 
   * hatena-star.api
 
-    nickname �͂���܂���B
+    nickname はありません。
 
 === VARIABLE
 
 --- hatena-star.api:*hatena-star-base-uri*
 
-    �͂ĂȃX�^�[�̃x�[�X URI ���w�肵�܂��B
-    ��{�I�ɂ͕ύX�̕K�v�͂���܂���B
+    はてなスターのベース URI を指定します。
+    基本的には変更の必要はありません。
 
 --- hatena-star.ui:*hatena-star-default-star-char*
 
     ((<hatena-star-make-stars-string|hatena-star.ui:hatena-star-make-stars-string COUNT &KEY STAR-CHAR INNER INNER-MIN>))
-    �Ȃǂ̊֐��� STAR-CHAR ���ȗ������ꍇ�ɗ��p���� charcter �ł��B
+    などの関数で STAR-CHAR を省略した場合に利用する charcter です。
 
-    �f�t�H���g�� #\�� �ł��B
+    デフォルトは #\★ です。
 
 --- hatena-star.ui:*hatena-star-default-star-color*
 
     ((<hatena-star-stars-insert|hatena-star.ui:hatena-star-stars-insert ENTRY-OR-STARS &KEY TAG STAR-CHAR COLOR>))
-    �Ł���`�悷��Ƃ��̐F�ł��B
+    で☆を描画するときの色です。
 
-    �f�t�H���g�� (:foreground 11) �ł��B
+    デフォルトは (:foreground 11) です。
 
 --- hatena-star.ui:*hatena-star-inner-count-min*
 
     ((<hatena-star-stars-insert|hatena-star.ui:hatena-star-stars-insert ENTRY-OR-STARS &KEY TAG STAR-CHAR COLOR>))
-    �Ł���`�悷��Ƃ��ɁA�ȗ��`���ɂ���ŏ��́��̐��ł��B
+    で☆を描画するときに、省略形式にする最小の☆の数です。
 
-    �f�t�H���g�� 16 �ł��B
+    デフォルトは 16 です。
 
 
 === CONSTANT
 
-�Ȃ��B
+なし。
 
 === CODITION
 
-�Ȃ��B
+なし。
 
 === COMMAND
 
-�Ȃ��B
+なし。
 
 === DATATYPE
 
 --- BLOG-INFO
 
-    BLOG-INFO �̓u���O�̂͂ĂȃX�^�[����ێ����܂��B
-    BLOG-INFO ��
+    BLOG-INFO はブログのはてなスター情報を保持します。
+    BLOG-INFO は
     ((<hatena-star-get-blog|hatena-star.api:hatena-star-get-blog BLOG-URI &KEY SINCE NOMSG CALLBACK FUTURE>))
-    �Ŏ擾���܂��B
+    で取得します。
 
-    BLOG-INFO ����͈ȉ��̊֐��ŏ����擾�ł��܂��B
+    BLOG-INFO からは以下の関数で情報を取得できます。
 
     * ((<hatena-star-blog-uri|hatena-star.api:hatena-star-blog-uri BLOG-INFO>))
     * ((<hatena-star-blog-title|hatena-star.api:hatena-star-blog-title BLOG-INFO>))
@@ -169,14 +169,14 @@ hatena-star �͈ȉ��̃p�b�P�[�W�𗘗p���Ă��܂��B
 
 --- ENTRY-INFO
 
-    ENTRY-INFO �̓u���O�G���g���̂͂ĂȃX�^�[����ێ����܂��B
-    ENTRY-INFO ��
+    ENTRY-INFO はブログエントリのはてなスター情報を保持します。
+    ENTRY-INFO は
     ((<hatena-star-get-entries|hatena-star.api:hatena-star-get-entries PERMALINK-LIST &KEY SINCE NOMSG CALLBACK FUTURE>))
-    �܂���
+    または
     ((<hatena-star-get-entry|hatena-star.api:hatena-star-get-entry ENTRY-OR-PERMALINK &KEY SINCE NOMSG CALLBACK FUTURE>))
-    �Ŏ擾���܂��B
+    で取得します。
 
-    ENTRY-INFO ����͈ȉ��̏����擾�ł��܂��B
+    ENTRY-INFO からは以下の情報を取得できます。
 
     * ((<hatena-star-entry-can-comment-p|hatena-star.api:hatena-star-entry-can-comment-p ENTRY-INFO>))
     * ((<hatena-star-entry-uri|hatena-star.api:hatena-star-entry-uri ENTRY-INFO>))
@@ -185,12 +185,12 @@ hatena-star �͈ȉ��̃p�b�P�[�W�𗘗p���Ă��܂��B
 
 --- STAR-LIST
 
-    STAR-LIST �̓u���O�G���g���� ((<STAR-INFO>)) �̃��X�g�ł��B
-    STAR-LIST ��
+    STAR-LIST はブログエントリの ((<STAR-INFO>)) のリストです。
+    STAR-LIST は
     ((<hatena-star-entry-stars|hatena-star.api:hatena-star-entry-stars ENTRY-INFO>))
-    �Ŏ擾���܂��B
+    で取得します。
 
-    STAR-LIST ����͈ȉ��̏����擾�ł��܂��B
+    STAR-LIST からは以下の情報を取得できます。
 
     * ((<hatena-star-stars-all-p|hatena-star.api:hatena-star-stars-all-p ENTRY-OR-STARS>))
     * ((<hatena-star-stars-by-user-p|hatena-star.api:hatena-star-stars-by-user-p ENTRY-OR-STARS>))
@@ -200,10 +200,10 @@ hatena-star �͈ȉ��̃p�b�P�[�W�𗘗p���Ă��܂��B
 
 --- STAR-INFO
 
-    STAR-INFO �̓u���O�G���g���́��̏���ێ����܂��B
-    STAR-INFO �� ((<STAR-LIST>)) �̗v�f�ł��B
+    STAR-INFO はブログエントリの☆の情報を保持します。
+    STAR-INFO は ((<STAR-LIST>)) の要素です。
 
-    STAR-INFO ����͈ȉ��̏����擾�ł��܂��B
+    STAR-INFO からは以下の情報を取得できます。
 
     * ((<hatena-star-star-name|hatena-star.api:hatena-star-star-name STAR-INFO>))
     * ((<hatena-star-star-quote|hatena-star.api:hatena-star-star-quote STAR-INFO>))
@@ -212,12 +212,12 @@ hatena-star �͈ȉ��̃p�b�P�[�W�𗘗p���Ă��܂��B
 
 --- COMMENT-INFO
 
-    COMMENT-INFO �̓u���O�G���g���̃R�����g��ێ����܂��B
-    COMMENT-INFO ��
+    COMMENT-INFO はブログエントリのコメントを保持します。
+    COMMENT-INFO は
     ((<hatena-star-entry-comments|hatena-star.api:hatena-star-entry-comments ENTRY-INFO>))
-    �Ŏ擾���܂��B
+    で取得します。
 
-    COMMENT-INFO ����͈ȉ��̏����擾�ł��܂��B
+    COMMENT-INFO からは以下の情報を取得できます。
 
     * ((<hatena-star-comment-name|hatena-star.api:hatena-star-comment-name COMMENT-INFO>))
     * ((<hatena-star-comment-body|hatena-star.api:hatena-star-comment-body COMMENT-INFO>))
@@ -228,70 +228,70 @@ hatena-star �͈ȉ��̃p�b�P�[�W�𗘗p���Ă��܂��B
 
 --- hatena-star.api:hatena-star-get-blog BLOG-URI &KEY SINCE NOMSG CALLBACK FUTURE
 
-    �w�肳�ꂽ BLOG-URI �̃u���O�̂͂ĂȃX�^�[�����擾���܂��B
+    指定された BLOG-URI のブログのはてなスター情報を取得します。
 
-    ((<BLOG-INFO>)) ��Ԃ��܂��B
+    ((<BLOG-INFO>)) を返します。
 
-    ��:
+    例:
         (let ((blog (hatena-star-get-blog "http://d.hatena.ne.jp/hatenastar/")))
-          (msgbox "~A�́���~D�ł��B~%~A"
+          (msgbox "~Aの☆は~D個です。~%~A"
                   (hatena-star-blog-title blog)
                   (hatena-star-blog-star-count blog)
                   (hatena-star-blog-uri blog)))
 
-    * NOMSG �� non-nil ���w�肷��ƃ��b�Z�[�W���o�͂��܂���B
+    * NOMSG に non-nil を指定するとメッセージを出力しません。
 
-      nil �̏ꍇ���b�Z�[�W�̈�ɒʐM��Ԃ�\�����܂��B
-      �f�t�H���g�� nil �ł��B
+      nil の場合メッセージ領域に通信状態を表示します。
+      デフォルトは nil です。
 
-    * SINCE �ɂ͑��M���� If-Modified-Since �w�b�_���w�肵�܂��B
+    * SINCE には送信時の If-Modified-Since ヘッダを指定します。
 
-      SINCE �ɂ͈ȉ��̒l���w��ł��܂��B
+      SINCE には以下の値を指定できます。
 
       : :epoch
-          Unix epoch (1970-01-01 00:00:00) �𑗐M���܂��B
-          ���̒l���w�肷��ƃL���b�V�����g�킸�Ƀl�b�g���[�N����擾���܂��B
+          Unix epoch (1970-01-01 00:00:00) を送信します。
+          この値を指定するとキャッシュを使わずにネットワークから取得します。
 
-      : <���l>
-          ���l���w�肵���ꍇ�̓��[�J�����Ԃ� universal-time �ƌ��Ȃ���
-          ������ɕϊ����܂��B
+      : <数値>
+          数値を指定した場合はローカル時間の universal-time と見なして
+          文字列に変換します。
 
-      : <������>
-          ��������w�肵���ꍇ�͂��̂܂ܑ��M���܂��B
+      : <文字列>
+          文字列を指定した場合はそのまま送信します。
 
-    * CALLBACK ���w�肷��Ɣ񓯊��ʐM���s���܂��B
+    * CALLBACK を指定すると非同期通信を行います。
 
-      �͂ĂȃX�^�[���̎擾�ɐ��������ꍇ�̓u���O���
-      CALLBACK �̈����Ɏw�肵�Ăяo���܂��B
+      はてなスター数の取得に成功した場合はブログ情報が
+      CALLBACK の引数に指定し呼び出します。
 
-      ���s�����ꍇ�͕����񂪓n����܂��B
+      失敗した場合は文字列が渡されます。
 
-    * FUTURE �� non-nil ���w�肵���ꍇ�� xml-http-request �� Future �I�u�W�F�N�g��Ԃ��܂��B
+    * FUTURE に non-nil を指定した場合は xml-http-request の Future オブジェクトを返します。
 
-      Future �I�u�W�F�N�g������擾����ɂ͈ȉ��̊֐����g�p���܂��B
+      Future オブジェクトから情報取得するには以下の関数を使用します。
       * ((<hatena-star-future-completed-p|hatena-star.api:hatena-star-future-completed-p FUTURE>))
       * ((<hatena-star-future-p|hatena-star.api:hatena-star-future-p OBJ>))
       * ((<hatena-star-future-value|hatena-star.api:hatena-star-future-value FUTURE &REST OPTIONS>))
 
 --- hatena-star.api:hatena-star-blog-uri BLOG-INFO
 
-    �u���O�� URI ��Ԃ��܂��B
+    ブログの URI を返します。
 
 --- hatena-star.api:hatena-star-blog-title BLOG-INFO
 
-    �u���O�̃^�C�g����Ԃ��܂��B
+    ブログのタイトルを返します。
 
 --- hatena-star.api:hatena-star-blog-star-count BLOG-INFO
 
-    �u���O�ɕt�������̐���Ԃ��܂��B
+    ブログに付いた☆の数を返します。
 
 --- hatena-star.api:hatena-star-get-entries PERMALINK-LIST &KEY SINCE NOMSG CALLBACK FUTURE
 
-    �w�肳�ꂽ PERMALINK-LIST �ɕt����ꂽ �͂ĂȃX�^�[�̏����擾���܂��B
+    指定された PERMALINK-LIST に付けられた はてなスターの情報を取得します。
 
-    ((<ENTRY-INFO>)) �� RKS (�{���ҏ��) ���l�ŕԂ��܂��B
+    ((<ENTRY-INFO>)) と RKS (閲覧者情報) 多値で返します。
 
-    ��:
+    例:
         (defvar *rks* nil)
         (multiple-value-bind (entry rks)
             (hatena-star-get-entries "http://d.hatena.ne.jp/hatenastar/20071129/1196290565")
@@ -309,422 +309,422 @@ hatena-star �͈ȉ��̃p�b�P�[�W�𗘗p���Ă��܂��B
                     (hatena-star-entry-uri entry))))
 
 
-    ���� 15 �ȏ�t�����G���g���́��̏�񂪏ȗ�����A
-    �ꕔ�̏�� (�ŏ��́��A�Ԃ́��̐��A�Ō�́�) �����擾�ł��܂���B
+    ☆が 15 個以上付いたエントリは☆の情報が省略され、
+    一部の情報 (最初の☆、間の☆の数、最後の☆) しか取得できません。
 
-    ���ׂẮ����擾�������ꍇ�͂����
+    すべての☆を取得したい場合はさらに
     ((<hatena-star-get-entry|hatena-star.api:hatena-star-get-entry ENTRY-OR-PERMALINK &KEY SINCE NOMSG CALLBACK FUTURE>))
-    ���Ăяo���K�v������܂��B
+    を呼び出す必要があります。
 
-    * PERMALINK-LIST �ɂ͕����̃G���g���� permalink �����X�g�Ŏw�肵�܂��B
+    * PERMALINK-LIST には複数のエントリの permalink をリストで指定します。
 
-      �擾�������G���g����������Ȃ��ꍇ�́A���� permalink �𕶎���Ŏw�肵�Ă����܂��܂���
-      (�v�f����̃��X�g�ɂ���K�v�͂���܂���)�B
+      取得したいエントリが一つしかない場合は、その permalink を文字列で指定してもかまいません
+      (要素が一つのリストにする必要はありません)。
 
-      * permalink �����X�g�Ŏw�肵���ꍇ�A((<ENTRY-INFO>)) �̃��X�g��Ԃ��܂��B
-      * permalink �𕶎���Ŏw�肵���ꍇ�A((<ENTRY-INFO>)) ���P�Ԃ��܂��i���X�g�ł͂Ȃ��j�B
+      * permalink をリストで指定した場合、((<ENTRY-INFO>)) のリストを返します。
+      * permalink を文字列で指定した場合、((<ENTRY-INFO>)) を１つ返します（リストではない）。
 
-    * CALLBACK, FUTURE ��
+    * CALLBACK, FUTURE は
       ((<hatena-star-get-blog|hatena-star.api:hatena-star-get-blog BLOG-URI &KEY SINCE NOMSG CALLBACK FUTURE>))
-      ���Q�Ƃ��Ă��������B
+      を参照してください。
 
 --- hatena-star.api:hatena-star-get-entry ENTRY-OR-PERMALINK &KEY SINCE NOMSG CALLBACK FUTURE
 
-    �w�肳�ꂽ�G���g���ɕt�����͂ĂȃX�^�[�̃G���g�������擾���܂��B
+    指定されたエントリに付いたはてなスターのエントリ情報を取得します。
 
-    ((<ENTRY-INFO>)) ��Ԃ��܂��B
+    ((<ENTRY-INFO>)) を返します。
 
-    ���� API �Ŏ擾�����ꍇ�A�u�ŏ��́��A�Ԃ́��̐��A�Ō�́��v�`���̏ȗ��͂���܂���B
+    この API で取得した場合、「最初の☆、間の☆の数、最後の☆」形式の省略はされません。
 
-    * ENTRY-OR-PERMALINK �ɂ� ((<ENTRY-INFO>)) �� permalink �𕶎���Ŏw�肵�܂��B
+    * ENTRY-OR-PERMALINK には ((<ENTRY-INFO>)) か permalink を文字列で指定します。
 
-    * CALLBACK, FUTURE ��
+    * CALLBACK, FUTURE は
       ((<hatena-star-get-blog|hatena-star.api:hatena-star-get-blog BLOG-URI &KEY SINCE NOMSG CALLBACK FUTURE>))
-      ���Q�Ƃ��Ă��������B
+      を参照してください。
 
 --- hatena-star.api:hatena-star-entry-can-comment-p ENTRY-INFO
 
-    ���̃G���g���ɃR�����g�����邱�Ƃ��ł��邩�Ԃ��܂��B
+    そのエントリにコメントをつけることができるか返します。
 
 --- hatena-star.api:hatena-star-entry-uri ENTRY-INFO
 
-    �G���g���� URI ��Ԃ��܂��B
+    エントリの URI を返します。
 
 --- hatena-star.api:hatena-star-entry-stars ENTRY-INFO
 
-    �G���g�����灙���X�g���擾���܂��B
+    エントリから☆リストを取得します。
 
-    ((<STAR-LIST>)) ��Ԃ��܂��B
+    ((<STAR-LIST>)) を返します。
 
-    ��:
+    例:
         (let* ((e (hatena-star-get-entry "http://d.hatena.ne.jp/hatenastar/20070707/1184453490"))
                (stars (hatena-star-entry-stars e)))
           (with-output-to-temp-buffer ("*Hatena:Star*")
-            (format t "���̐�: ~D~%~A~%~%"
+            (format t "☆の数: ~D~%~A~%~%"
                     (hatena-star-stars-count stars)
                     (hatena-star-entry-uri e))
             (dolist (star stars)
               (multiple-value-bind (name quote _)
                   (hatena-star-star-values star)
-                (format t "~A�u~A�v~%" name (or quote ""))))))
+                (format t "~A「~A」~%" name (or quote ""))))))
 
-    ���̃��X�g�͏ȗ�����邱�Ƃ�����܂��B
+    ☆のリストは省略されることがあります。
 
     * ((<hatena-star-get-entries|hatena-star.api:hatena-star-get-entries PERMALINK-LIST &KEY SINCE NOMSG CALLBACK FUTURE>))
-      �Ŏ擾�����ꍇ�F
+      で取得した場合：
 
-      * ���� 15 �ȏ�t���Ă���ꍇ�́A�u�ŏ��́��A�Ԃ́��̐��A�Ō�́��v
-        �������������擾�ł��܂���B
+      * ☆が 15 個以上付いている場合は、「最初の☆、間の☆の数、最後の☆」
+        だけしか情報を取得できません。
 
-        �Ԃ́��̏�񂪂ق����ꍇ�� hatena-star-get-entry ���g���K�v������܂��B
+        間の☆の情報がほしい場合は hatena-star-get-entry を使う必要があります。
 
-        ���̌`���̏ȗ��`���ǂ�����
+        この形式の省略形かどうかは
         ((<hatena-star-stars-inner-count-p|hatena-star.api:hatena-star-stars-inner-count-p ENTRY-OR-STARS>))
-        �Ŕ���ł��܂��B
+        で判定できます。
 
-      * 15 �����̏ꍇ�͂��ׂĂ̏����擾�\�ł��B
+      * 15 未満の場合はすべての情報を取得可能です。
 
-        ���ׂĂ̏�񂪎擾�\���ǂ�����
+        すべての情報が取得可能かどうかは
         ((<hatena-star-stars-all-p|hatena-star.api:hatena-star-stars-all-p ENTRY-OR-STARS>))
-        �Ŕ���ł��܂��B
+        で判定できます。
 
     * ((<hatena-star-get-entry|hatena-star.api:hatena-star-get-entry ENTRY-OR-PERMALINK &KEY SINCE NOMSG CALLBACK FUTURE>))
-      �Ŏ擾�����ꍇ�F
+      で取得した場合：
 
-      * ���� 300 �ȏ�t���Ă���ꍇ�́A���[�U���Ƃɐ��̐����W�񂳂�܂��B
+      * ☆が 300 個以上付いている場合は、ユーザごとに星の数が集約されます。
 
-        �e���[�U���t�������̐���
+        各ユーザが付けた星の数は
         ((<hatena-star-star-count|hatena-star.api:hatena-star-star-count STAR-INFO>))
-        �Ŏ擾�ł��܂��B
+        で取得できます。
 
-        ���̌`���̏ȗ��`���ǂ�����
+        この形式の省略形かどうかは
         ((<hatena-star-stars-by-user-p|hatena-star.api:hatena-star-stars-by-user-p ENTRY-OR-STARS>))
-        �Ŕ���ł��܂��B
+        で判定できます。
 
-      * 300 �����̏ꍇ�͂��ׂĂ̏����擾�\�ł��B
+      * 300 未満の場合はすべての情報を取得可能です。
 
         ((<hatena-star-stars-all-p|hatena-star.api:hatena-star-stars-all-p ENTRY-OR-STARS>))
-        �Ŕ���ł��܂��B
+        で判定できます。
 
 --- hatena-star.api:hatena-star-entry-comments ENTRY-INFO
 
-    �G���g���ɕt�����R�����g�����X�g�ŕԂ��܂��B
+    エントリに付いたコメントをリストで返します。
 
-    �R�����g����͈ȉ��̏����擾�ł��܂��B
+    コメントからは以下の情報を取得できます。
 
 --- hatena-star.api:hatena-star-comment-name COMMENT-INFO
 
-    �R�����g�������l�̖��O���擾���܂��B
+    コメントをつけた人の名前を取得します。
 
 --- hatena-star.api:hatena-star-comment-body COMMENT-INFO
 
-    �R�����g�̖{�����擾���܂��B�{�����Ȃ��ꍇ�� nil ��Ԃ��܂��B
+    コメントの本文を取得します。本文がない場合は nil を返します。
 
 --- hatena-star.api:hatena-star-comment-values COMMENT-INFO
 
-    �R�����g�������l��
-    ((<"���O"|hatena-star.api:hatena-star-comment-name COMMENT-INFO>))
-    ��
-    ((<�{�� |hatena-star.api:hatena-star-comment-body COMMENT-INFO>))
-    �𑽒l�ŕԂ��܂��B
+    コメントをつけた人の
+    ((<"名前"|hatena-star.api:hatena-star-comment-name COMMENT-INFO>))
+    と
+    ((<本文 |hatena-star.api:hatena-star-comment-body COMMENT-INFO>))
+    を多値で返します。
 
 --- hatena-star.api:hatena-star-stars-all-p ENTRY-OR-STARS
 
-    ���̃��X�g����؏ȗ�����Ă��Ȃ��Ȃ� t ��Ԃ��܂��B
+    ☆のリストが一切省略されていないなら t を返します。
 
-    �G���g�����Ɓ����X�g�̗������w��ł��܂��B
+    エントリ情報と☆リストの両方を指定できます。
 
 --- hatena-star.api:hatena-star-stars-by-user-p ENTRY-OR-STARS
 
-    ���̃��X�g�������������[�U���ƂɏW�񂳂�Ă���Ȃ� t ��Ԃ��܂��B
+    ☆のリストが☆をつけたユーザごとに集約されているなら t を返します。
 
-    �G���g�����Ɓ����X�g�̗������w��ł��܂��B
+    エントリ情報と☆リストの両方を指定できます。
 
 --- hatena-star.api:hatena-star-stars-inner-count-p ENTRY-OR-STARS
 
-    ���̃��X�g���i�ŏ��́��A�Ԃ́��̐��A�Ō�́��j�݂̂̏ꍇ t ��Ԃ��܂��B
+    ☆のリストが（最初の☆、間の☆の数、最後の☆）のみの場合 t を返します。
 
-    �G���g�����Ɓ����X�g�̗������w��ł��܂��B
+    エントリ情報と☆リストの両方を指定できます。
 
 --- hatena-star.api:hatena-star-stars-by-user ENTRY-OR-STARS &KEY LIST-QUOTE
 
-    ���̃��X�g�����[�U���ƂɏW�񂵂܂��B
-    ���̊֐���
+    ☆のリストをユーザごとに集約します。
+    この関数は
     ((<hatena-star-get-entry|hatena-star.api:hatena-star-get-entry ENTRY-OR-PERMALINK &KEY SINCE NOMSG CALLBACK FUTURE>))
-    �Ŏ擾���������X�g���A���̐��ɂ�����炸�ɏW��`���ɂ������ꍇ�ɗ��p���܂��B
+    で取得した☆リストを、☆の数にかかわらずに集約形式にしたい場合に利用します。
 
-    * ���[�U���Ƃ̐��̐���
+    * ユーザごとの星の数は
       ((<hatena-star-star-count|hatena-star.api:hatena-star-star-count STAR-INFO>))
-      �Ŏ擾�ł��܂��B
+      で取得できます。
 
-    * LIST-QUOTE �� non-nil �̏ꍇ�A���p�������X�g�ŕԂ��܂��B
-      nil �̏ꍇ�͍ŏ��̈��p���݂̂�Ԃ��܂��B
+    * LIST-QUOTE が non-nil の場合、引用文をリストで返します。
+      nil の場合は最初の引用文のみを返します。
 
-      �f�t�H���g�� nil �ł��B
+      デフォルトは nil です。
 
-    * ���� 300 �𒴂���ꍇ�͍ŏ����烆�[�U���ƂɏW�񂳂�Ă��܂��B
+    * ☆が 300 個を超える場合は最初からユーザごとに集約されています。
 
-      (�������̂���) ���łɏW�񂳂�Ă��� LIST-QUOTE �� nil �̏ꍇ�͈��������̂܂ܕԂ��܂��B
-      LIST-QUOTE �� non-nil �̏ꍇ�́A���X�g�ɂ��ĕԂ��܂��B
+      (高速化のため) すでに集約されていて LIST-QUOTE が nil の場合は引数をそのまま返します。
+      LIST-QUOTE が non-nil の場合は、リストにして返します。
 
-      �����Ӂ� ����āA�ȉ��̃R�[�h�͈��p�������X�g�ŕԂ��܂��B
+      ※注意※ よって、以下のコードは引用文をリストで返します。
 
           (let ((stars (hatena-star-stars-by-user stars :list-quote t)))
             (hatena-star-stars-by-user stars :list-quote nil))
 
-    * inner count �`��
+    * inner count 形式
       (((<hatena-star-stars-inner-count-p|hatena-star.api:hatena-star-stars-inner-count-p ENTRY-OR-STARS>))
-      �� t ��Ԃ�) �̏ꍇ type-error ��ʒm���܂��B
+      が t を返す) の場合 type-error を通知します。
 
-    �G���g�����Ɓ����X�g�̗������w��ł��܂��B
+    エントリ情報と☆リストの両方を指定できます。
 
 --- hatena-star.api:hatena-star-stars-inner-count-values ENTRY-OR-STARS
 
-    ���̃��X�g����i�ŏ��́��A�Ԃ́��̐��A�Ō�́��j�𑽒l�Ŏ擾���܂��B
+    ☆のリストから（最初の☆、間の☆の数、最後の☆）を多値で取得します。
 
     ((<hatena-star-stars-inner-count-p|hatena-star.api:hatena-star-stars-inner-count-p ENTRY-OR-STARS>))
-    �� nil �ł���L�`���Ŏ擾�ł��܂��B
+    が nil でも上記形式で取得できます。
 
-    �G���g�����Ɓ����X�g�̗������w��ł��܂��B
+    エントリ情報と☆リストの両方を指定できます。
 
 --- hatena-star.api:hatena-star-stars-count ENTRY-OR-STARS
 
-    ���̑������擾���܂��B�����ȗ�����Ă��Ă��������擾�\�ł��B
+    ☆の総数を取得します。☆が省略されていても正しく取得可能です。
 
 --- hatena-star.api:hatena-star-star-name STAR-INFO
 
-    ���������l�̖��O���擾���܂��B
+    ☆をつけた人の名前を取得します。
 
 --- hatena-star.api:hatena-star-star-quote STAR-INFO
 
-    ���̈��p�����擾���܂��B���p���Ă��Ȃ��ꍇ�� nil ��Ԃ��܂��B
+    ☆の引用文を取得します。引用していない場合は nil を返します。
 
 --- hatena-star.api:hatena-star-star-count STAR-INFO
 
-    ���������l���Ƃ́��̌���Ԃ��܂��B
+    ☆をつけた人ごとの☆の個数を返します。
 
-    300 �ȏ�́��������G���g���i
+    300 以上の☆がついたエントリ（
     ((<hatena-star-stars-by-user-p|hatena-star.api:hatena-star-stars-by-user-p ENTRY-OR-STARS>))
-    �� t ��Ԃ��j�̏ꍇ�̂ݒl��Ԃ��܂��B
+    が t を返す）の場合のみ値を返します。
 
-    ���̐��� 300 �����̏ꍇ�� nil ��Ԃ��܂��B
+    ☆の数が 300 未満の場合は nil を返します。
 
 --- hatena-star.api:hatena-star-star-values STAR-INFO
 
-    ���������l��
-    ((<"���O"|hatena-star.api:hatena-star-star-name STAR-INFO>))
-    ��
-    ((<"���p��"|hatena-star.api:hatena-star-star-quote STAR-INFO>))
-    ��
-    ((<"���̐�"|hatena-star.api:hatena-star-star-count STAR-INFO>))
-    �𑽒l�ŕԂ��܂��B
+    ☆をつけた人の
+    ((<"名前"|hatena-star.api:hatena-star-star-name STAR-INFO>))
+    と
+    ((<"引用文"|hatena-star.api:hatena-star-star-quote STAR-INFO>))
+    と
+    ((<"☆の数"|hatena-star.api:hatena-star-star-count STAR-INFO>))
+    を多値で返します。
 
 --- hatena-star.api:hatena-star-add-star ENTRY-OR-PERMALINK RKS &KEY NOMSG CALLBACK FUTURE TOKEN TITLE QUOTE
 
-    �w�肳�ꂽ�G���g���Ɂ������܂��B
+    指定されたエントリに☆をつけます。
 
-    ���ۂɂ������� ((<STAR-INFO>)) ��Ԃ��܂��B
+    実際につけた☆の ((<STAR-INFO>)) を返します。
 
-    * ENTRY-OR-PERMALINK �ɂ� ((<ENTRY-INFO>)) �� permalink �𕶎���Ŏw�肵�܂��B
+    * ENTRY-OR-PERMALINK には ((<ENTRY-INFO>)) か permalink を文字列で指定します。
 
-    * RKS ��
+    * RKS は
       ((<hatena-star-get-entries|hatena-star.api:hatena-star-get-entries PERMALINK-LIST &KEY SINCE NOMSG CALLBACK FUTURE>))
-      �Ŏ擾�ł��܂��B
+      で取得できます。
 
-    * TOKEN �ɂ̓T�C�g�ŗL�̎��ʎq���w�肵�܂��B
+    * TOKEN にはサイト固有の識別子を指定します。
 
-      �Ȃ��Ă������݂����ł��B
+      なくてもいいみたいです。
 
-    * TITLE �ɂ̓G���g���̃^�C�g�����w�肵�܂��B
+    * TITLE にはエントリのタイトルを指定します。
 
-    * QUOTE �ɂ́��̈��p��������w�肵�܂��B
+    * QUOTE には☆の引用文字列を指定します。
 
-      ���̃y�[�W�Ɋ܂܂�Ă��Ȃ���������w�肷�邱�Ƃ͂ł��܂���B
-      �w�肵���ꍇ�A���p������Ȃ��Ł����t���܂��B
+      元のページに含まれていない文字列を指定することはできません。
+      指定した場合、引用文字列なしで☆が付きます。
 
-      ���������p�ł������ǂ����͖߂�l�ŕ�����܂��B
+      正しく引用できたかどうかは戻り値で分かります。
 
-    * CALLBACK, FUTURE ��
+    * CALLBACK, FUTURE は
       ((<hatena-star-get-blog|hatena-star.api:hatena-star-get-blog BLOG-URI &KEY SINCE NOMSG CALLBACK FUTURE>))
-      ���Q�Ƃ��Ă��������B
+      を参照してください。
 
 --- hatena-star.api:hatena-star-add-comment ENTRY-OR-PERMALINK RKS &KEY CALLBACK FUTURE TITLE BODY
 
-    �w�肳�ꂽ URI �ɃR�����g�����܂��B
-    �R�����g�̓X�^�[�t�����h�ɂ��������܂���B
+    指定された URI にコメントをつけます。
+    コメントはスターフレンドにしかつけられません。
 
-    ((<COMMENT-INFO>)) ��Ԃ��܂��B
+    ((<COMMENT-INFO>)) を返します。
 
-    * ENTRY-OR-PERMALINK �ɂ� ((<ENTRY-INFO>)) �� permalink �𕶎���Ŏw�肵�܂��B
+    * ENTRY-OR-PERMALINK には ((<ENTRY-INFO>)) か permalink を文字列で指定します。
 
-    * RKS ��
+    * RKS は
       ((<hatena-star-get-entries|hatena-star.api:hatena-star-get-entries PERMALINK-LIST &KEY SINCE NOMSG CALLBACK FUTURE>))
-      �Ŏ擾�ł��܂��B
+      で取得できます。
 
-    * TITLE �� BODY �ŃR�����g�̓��e���w�肵�܂��B
+    * TITLE と BODY でコメントの内容を指定します。
 
-    * CALLBACK, FUTURE ��
+    * CALLBACK, FUTURE は
       ((<hatena-star-get-blog|hatena-star.api:hatena-star-get-blog BLOG-URI &KEY SINCE NOMSG CALLBACK FUTURE>))
-      ���Q�Ƃ��Ă��������B
+      を参照してください。
 
 --- hatena-star.api:hatena-star-deletable-p NAME-OR-STAR &KEY CALLBACK FUTURE
 
-    �w�肵�����[�U�́����폜�ł���ꍇ t ��Ԃ��܂��B
+    指定したユーザの☆を削除できる場合 t を返します。
 
-    ��{�I�ɂ͎����� NAME �̏ꍇ�̂� t ��Ԃ��͂��ł��B
-    �͂ĂȂɃ��O�C�����Ă��Ȃ��ꍇ�͎����� NAME �ł� nil ��Ԃ��܂��i���Ԃ�j�B
+    基本的には自分の NAME の場合のみ t を返すはずです。
+    はてなにログインしていない場合は自分の NAME でも nil を返します（たぶん）。
 
-    * NAME-OR-STAR �ɂ̓��[�U���𕶎���Ŏw�肷�邩 ((<STAR-INFO>)) ���w�肵�܂��B
+    * NAME-OR-STAR にはユーザ名を文字列で指定するか ((<STAR-INFO>)) を指定します。
 
-    * CALLBACK, FUTURE ��
+    * CALLBACK, FUTURE は
       ((<hatena-star-get-blog|hatena-star.api:hatena-star-get-blog BLOG-URI &KEY SINCE NOMSG CALLBACK FUTURE>))
-      ���Q�Ƃ��Ă��������B
+      を参照してください。
 
 --- hatena-star.api:hatena-star-delete-star ENTRY-OR-PERMALINK RKS &KEY CALLBACK FUTURE NAME QUOTE STAR
 
-    �w�肵���G���g���ɕt���������폜���܂��B
+    指定したエントリに付いた☆を削除します。
 
-    ���������ꍇ�� t ���A���s�����ꍇ�� nil ��Ԃ��܂��B
+    成功した場合は t を、失敗した場合は nil を返します。
 
-    * ENTRY-OR-PERMALINK �ɂ� ((<ENTRY-INFO>)) �� permalink �𕶎���Ŏw�肵�܂��B
+    * ENTRY-OR-PERMALINK には ((<ENTRY-INFO>)) か permalink を文字列で指定します。
 
-    * RKS ��
+    * RKS は
       ((<hatena-star-get-entries|hatena-star.api:hatena-star-get-entries PERMALINK-LIST &KEY SINCE NOMSG CALLBACK FUTURE>))
-      �Ŏ擾�ł��܂��B
+      で取得できます。
 
-    * CALLBACK, FUTURE ��
+    * CALLBACK, FUTURE は
       ((<hatena-star-get-blog|hatena-star.api:hatena-star-get-blog BLOG-URI &KEY SINCE NOMSG CALLBACK FUTURE>))
-      ���Q�Ƃ��Ă��������B
+      を参照してください。
 
-    * �폜���遙�� STAR �� NAME �� QUOTE �Ŏw�肵�܂��B
+    * 削除する☆は STAR か NAME と QUOTE で指定します。
 
-      * STAR �ɂ� ((<STAR-INFO>)) ���w�肵�܂��B
+      * STAR には ((<STAR-INFO>)) を指定します。
 
-        �w�肵�� STAR �����̃��[�U�́��Ȃ�폜�ł��܂���B
+        指定した STAR が他のユーザの☆なら削除できません。
 
-      * NAME �� QUOTE �͕�����Ń��[�U���ƈ��p�����w�肵�܂��B
+      * NAME と QUOTE は文字列でユーザ名と引用文を指定します。
 
-        NAME �͏ȗ��\�ł��B�ȗ������ꍇ�͎����́����ΏۂɂȂ�܂��B
-        QUOTE ���ȗ������ꍇ�͈��p���Ȃ��́����ΏۂɂȂ�܂��B
+        NAME は省略可能です。省略した場合は自分の☆が対象になります。
+        QUOTE を省略した場合は引用文なしの☆が対象になります。
 
-    ��:
+    例:
 
-        ;; example.com �ɕt���������́�����폜
+        ;; example.com に付けた自分の☆を一個削除
         (hatena-star-delete-star "http://example.com/" *rks*)
 
-        ;; example.com �� "example" �����p���ĕt���������́�����폜
+        ;; example.com に "example" を引用して付けた自分の☆を一個削除
         (hatena-star-delete-star "http://example.com/" *rks* :quote "foo")
 
-        ;; example.com �ɕt���Ă��鎩���́���S���폜
+        ;; example.com に付いている自分の☆を全部削除
         (multiple-value-bind (entry rks)
             (hatena-star-get-entry "http://example.com/")
           (dolist (star (hatena-star-entry-stars entry))
-            (when (hatena-star-deletable-p star) ; �蔲���B�B�Bdeletable-p �̌��ʂ̓L���b�V�����ׂ�
+            (when (hatena-star-deletable-p star) ; 手抜き。。。deletable-p の結果はキャッシュすべき
               (hatena-star-delete-star entry rks :star star))))
 
 
 --- hatena-star.api:hatena-star-future-p OBJ
 
-    �w�肳�ꂽ OBJ �� Future �I�u�W�F�N�g�Ȃ� non-nil ��Ԃ��܂��B
+    指定された OBJ が Future オブジェクトなら non-nil を返します。
 
 --- hatena-star.api:hatena-star-future-completed-p FUTURE
 
-    �w�肳�ꂽ Future �I�u�W�F�N�g�̃��N�G�X�g���������Ă����� non-nil ��Ԃ��܂��B
+    指定された Future オブジェクトのリクエストが完了していたら non-nil を返します。
 
 --- hatena-star.api:hatena-star-future-value FUTURE &REST OPTIONS
 
-    �w�肳�ꂽ Future �I�u�W�F�N�g���猋�ʂ��擾���܂��B
-    ���N�G�X�g���������Ă��Ȃ��ꍇ�͊�����҂����킹�܂��B
+    指定された Future オブジェクトから結果を取得します。
+    リクエストが完了していない場合は完了を待ち合わせます。
 
-    �����̏ڍׂ�
+    引数の詳細は
     ((<xml-http-request|URL:http://miyamuko.s56.xrea.com/xyzzy/xml-http-request.html>))
-    �� (({xhr-future-value})) ���Q�Ƃ��Ă��������B
+    の (({xhr-future-value})) を参照してください。
 
 --- hatena-star.api:hatena-star-version
 
-    �{���C�u�����̃o�[�W������Ԃ��܂��B
-    �o�[�W������ major.minor.teeny �Ƃ����`���ł��B
+    本ライブラリのバージョンを返します。
+    バージョンは major.minor.teeny という形式です。
 
-    ���ꂼ��̔ԍ��͕K�� 1 ���ɂ���̂ŁA�ȉ��̂悤�ɔ�r���邱�Ƃ��ł��܂�
+    それぞれの番号は必ず 1 桁にするので、以下のように比較することができます
 
         (if (string<= "1.1.0" (hatena-star-version))
-            '(1.1.0 �ȍ~�ŗL���ȏ���)
-          '(1.1.0 ���O�̃o�[�W�����ł̏���))
+            '(1.1.0 以降で有効な処理)
+          '(1.1.0 より前のバージョンでの処理))
 
 
 --- hatena-star.ui:hatena-star-make-stars-string COUNT &KEY STAR-CHAR INNER INNER-MIN
 
-    �w�肳�ꂽ COUNT ���́��𕶎���ŕԂ��܂��B
+    指定された COUNT 数の☆を文字列で返します。
 
-    ��F
+    例：
          (hatena-star-make-stars-string 15)
-         "������������������������������"
-         (hatena-star-make-stars-string 16 :star-char #\��)
-         "��14��"
+         "★★★★★★★★★★★★★★★"
+         (hatena-star-make-stars-string 16 :star-char #\☆)
+         "☆14☆"
          (hatena-star-make-stars-string 4 :inner-min 5)
-         "��������"
+         "★★★★"
          (hatena-star-make-stars-string 5 :inner-min 5)
-         "��3��"
+         "★3★"
          (hatena-star-make-stars-string 3 :inner t)
-         "��1��"
+         "★1★"
 
-    * STAR-CHAR �ɂ́��ɑΉ����� charcter ���w�肵�܂��B
-      �f�t�H���g�� ((<*hatena-star-default-star-char*|hatena-star.ui:*hatena-star-default-star-char*>))
-      �ł��B
+    * STAR-CHAR には☆に対応する charcter を指定します。
+      デフォルトは ((<*hatena-star-default-star-char*|hatena-star.ui:*hatena-star-default-star-char*>))
+      です。
 
-    * INNER �� non-nil �̏ꍇ�AINNER-MIN �̒l�ɂ�����炸�ȗ��`���ŕԂ��܂��B
-      �������ACOUNT �� 2 �ȉ��̏ꍇ�͏ȗ��`���ɂ͂Ȃ�܂���B
+    * INNER が non-nil の場合、INNER-MIN の値にかかわらず省略形式で返します。
+      ただし、COUNT が 2 以下の場合は省略形式にはなりません。
 
-      �f�t�H���g�� nil �ł��B
+      デフォルトは nil です。
 
-    * INNER-MIN �ɂ͏ȗ��`���ɂ���ŏ��̐����w�肵�܂��B
-      ���̐��� INNER-MIN ��菭�Ȃ��ꍇ�͏ȗ��`���ɂ͂Ȃ�܂���B
+    * INNER-MIN には省略形式にする最小の数を指定します。
+      ☆の数が INNER-MIN より少ない場合は省略形式にはなりません。
 
-      �f�t�H���g�� ((<*hatena-star-inner-count-min*|hatena-star.ui:*hatena-star-inner-count-min*>))
-      �ł��B
+      デフォルトは ((<*hatena-star-inner-count-min*|hatena-star.ui:*hatena-star-inner-count-min*>))
+      です。
 
 --- hatena-star.ui:hatena-star-stars-to-string ENTRY-OR-STARS &KEY STAR-CHAR
 
-    �w�肳�ꂽ ((<STAR-LIST>)) �����̕�����ɂ��܂��B
+    指定された ((<STAR-LIST>)) を☆の文字列にします。
 
-    * STAR-CHAR �ɂ́��ɑΉ����� charcter ���w�肵�܂��B
-      �f�t�H���g�� ((<*hatena-star-default-star-char*|hatena-star.ui:*hatena-star-default-star-char*>))
-      �ł��B
+    * STAR-CHAR には☆に対応する charcter を指定します。
+      デフォルトは ((<*hatena-star-default-star-char*|hatena-star.ui:*hatena-star-default-star-char*>))
+      です。
 
-    * ���̐��� ((<*hatena-star-inner-count-min*|hatena-star.ui:*hatena-star-inner-count-min*>))
-      �ȏ�̏ꍇ�͏ȗ��`���ɂȂ�܂��B
+    * ☆の数が ((<*hatena-star-inner-count-min*|hatena-star.ui:*hatena-star-inner-count-min*>))
+      以上の場合は省略形式になります。
 
 --- hatena-star.ui:hatena-star-stars-insert ENTRY-OR-STARS &KEY TAG STAR-CHAR COLOR
 
-    �w�肳�ꂽ ((<STAR-LIST>)) �����̕�����ɂ��Č��݂̃o�b�t�@�ɑ}�����܂��B
+    指定された ((<STAR-LIST>)) を☆の文字列にして現在のバッファに挿入します。
 
-    * TAG �ɂ̓e�L�X�g�̑������w�肵�܂��B�ڍׂ� set-text-attribute ���Q�Ƃ��Ă��������B
+    * TAG にはテキストの属性を指定します。詳細は set-text-attribute を参照してください。
 
-    * STAR-CHAR �ɂ́��ɑΉ����� charcter ���w�肵�܂��B
-      �f�t�H���g�� ((<*hatena-star-default-star-char*|hatena-star.ui:*hatena-star-default-star-char*>))
-      �ł��B
+    * STAR-CHAR には☆に対応する charcter を指定します。
+      デフォルトは ((<*hatena-star-default-star-char*|hatena-star.ui:*hatena-star-default-star-char*>))
+      です。
 
-    * COLOR �ɂ́��̐F���w�肵�܂��B�ڍׂ� set-text-attribute ���Q�Ƃ��Ă��������B
+    * COLOR には☆の色を指定します。詳細は set-text-attribute を参照してください。
 
-      �f�t�H���g��
+      デフォルトは
       ((<*hatena-star-default-star-color*|hatena-star.ui:*hatena-star-default-star-color*>))
-      �Ŏw�肵�܂��B
+      で指定します。
 
-    * ���̐��� ((<*hatena-star-inner-count-min*|hatena-star.ui:*hatena-star-inner-count-min*>))
-      �ȏ�̏ꍇ�͏ȗ��`���ɂȂ�܂��B
+    * ☆の数が ((<*hatena-star-inner-count-min*|hatena-star.ui:*hatena-star-inner-count-min*>))
+      以上の場合は省略形式になります。
 
-    * TAG ����� COLOR �� nil �̏ꍇ�̓e�L�X�g�����͐ݒ肵�܂���B
+    * TAG および COLOR が nil の場合はテキスト属性は設定しません。
 
 
 === MACRO
 
-�Ȃ��B
+なし。
 
 
 == SAMPLE CODE
 
-�J�[�\������ URL �̂͂ĂȃX�^�[�����o�b�t�@�ɕ\������T���v���B
-URL �̎擾�� clickable-uri ���g���b�L�[�Ɏg���Ă܂��B
+カーソル下の URL のはてなスター情報をバッファに表示するサンプル。
+URL の取得に clickable-uri をトリッキーに使ってます。
 
   (require "clickable-uri")
   (require "hatena-star/api")
@@ -735,7 +735,7 @@ URL �̎擾�� clickable-uri ���g���b�L�[�Ɏg���Ă܂��B
       (macrolet ((puts (fmt &rest args)
                    `(insert (format nil ,fmt ,@args))))
         (with-output-to-temp-buffer ("*Hatena:Star*")
-          (puts "���̐�: ~D~%~A~%~%"
+          (puts "☆の数: ~D~%~A~%~%"
                 (hatena-star-stars-count entry)
                 (hatena-star-entry-uri entry))
           (dolist (star (hatena-star-entry-stars entry))
@@ -746,7 +746,7 @@ URL �̎擾�� clickable-uri ���g���b�L�[�Ɏg���Ă܂��B
                 (puts " (~D)" count))
               (when quote
                 (indent-to 30)
-                (puts " �u~A�v" quote))
+                (puts " 「~A」" quote))
               (puts "\n")))
           (goto-char (point-min))
           (refresh-screen)))))
@@ -766,11 +766,11 @@ URL �̎擾�� clickable-uri ���g���b�L�[�Ɏg���Ă܂��B
 
 == TODO
 
-* RKS �̎����擾�E�ۑ�
-* ���p���� HTML �^�O�̏����A���s�̓���
-* get-entries �� URI ���� 2084 ���������̑Ώ�
-  * �������ă��N�G�X�g�����ꍇ�Afuture �� callback �͂ǂ����邩�B
-    * ����ԋA���Ă��Ă��犮��?
+* RKS の自動取得・保存
+* 引用文の HTML タグの除去、改行の統一
+* get-entries で URI 長の 2084 文字制限の対処
+  * 分割してリクエストした場合、future と callback はどうするか。
+    * ぜんぶ帰ってきてから完了?
 * hatena-star.ui
   * mouse
   * popup-hatena-star
@@ -779,20 +779,20 @@ URL �̎擾�� clickable-uri ���g���b�L�[�Ɏg���Ă܂��B
 
 == KNOWN BUGS
 
-* IE �ł͂ĂȂɃ��O�C�����Ă��Ȃ��ƁAadd/delete �������Ȃ�
+* IE ではてなにログインしていないと、add/delete が動かない
 
 
 == AUTHOR
 
-�݂�ނ� ���䂫 (((<URL:mailto:miyamuko@gmail.com>)))
+みやむこ かつゆき (((<URL:mailto:miyamuko@gmail.com>)))
 
 
 == SEE ALSO
 
-: Hatena: �͂ĂȃX�^�[�J�E���g API �Ƃ�
+: Hatena: はてなスターカウント API とは
     ((<URL:http://d.hatena.ne.jp/keyword/%A4%CF%A4%C6%A4%CA%A5%B9%A5%BF%A1%BC%A5%AB%A5%A6%A5%F3%A5%C8API?kid=217860>))
 
-: �����܂�Ȃ������̂�HatenaStar.js�����p���Ă���API�𒲂ׂĂ݂��B
+: 何かつまらなかったのでHatenaStar.jsが利用しているAPIを調べてみた。
     ((<URL:http://d.hatena.ne.jp/Yuichirou/20070802#1186070862>))
 
 : HatenaStar.js
@@ -801,7 +801,7 @@ URL �̎擾�� clickable-uri ���g���b�L�[�Ɏg���Ă܂��B
 
 == COPYRIGHT
 
-hatena-star �� MIT/X ���C�Z���X�ɏ]���Ė{�\�t�g�E�F�A���g�p�A�Ĕz�z���邱�Ƃ��ł��܂��B
+hatena-star は MIT/X ライセンスに従って本ソフトウェアを使用、再配布することができます。
 
 See hatena-star/docs/MIT-LICENSE for full license.
 
