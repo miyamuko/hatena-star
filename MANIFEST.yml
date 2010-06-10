@@ -21,5 +21,4 @@ files:
     - site-lisp/hatena-star/docs/**/*.*
     - site-lisp/hatena-star/src/**/*.*
   exclude:
-    - site-lisp/hatena-star-scratch.l
     - site-lisp/hatena-star/tests/*.*
